@@ -1,23 +1,25 @@
-# Data Scientist
+# Undergraduate Math Student at Colgate University
 
-#### Technical Skills: Python, SQL, AWS, Snowflake, MATLAB
+#### D1 student-athlete, mathematics researcher, Benton Scholar
 
-## Education
-- Ph.D., Physics | The University of Texas at Dallas (_May 2022_)								       		
-- M.S., Physics	| The University of Texas at Dallas (_December 2019_)	 			        		
-- B.S., Physics | The University of Texas at Dallas (_May 2017_)
+## Colgate University
+**First-year student, expected graduation date May 2029**
+- 4.0 GPA
+- Benton Scholars Program- 3,000 research grant for summer 2026 to pursue independent research. Highly competitive application process.
+- Division One Heavyweight Rowing
+  
+**Relevant Coursework**
+- Linear Algebra
+- Computational Statistics in R + lab component
+- Nanophysics
+- Experience with graph theory and abstract algebra
+- 14 AP credits including Physics C: Mechanics, Physics C: Electricity and Magnetism, Calculus 2, Statistics, Biology, Research (AP Capstone)
 
-## Work Experience
-**Data Scientist @ Toyota Financial Services (_June 2022 - Present_)**
-- Uncovered and corrected missing step in production data pipeline which impacted over 70% of active accounts
-- Redeveloped loan originations model which resulted in 50% improvement in model performance and saving 1 million dollars in potential losses
-
-**Data Science Consultant @ Shawhin Talebi Ventures LLC (_December 2020 - Present_)**
-- Conducted data collection, processing, and analysis for novel study evaluating the impact of over 300 biometrics variables on human performance in hyper-realistic, live-fire training scenarios
-- Applied unsupervised deep learning approaches to longitudinal ICU data to discover novel sepsis sub-phenotypes
+**Research in Graph Theory and Monomial Orders**
+- Paid research internship starting in my first semester at Colgate. We are working to apply principles from recently discovered results concerning the reconstructability of algebraic objects to graphs. We have the ultimate aim of making progress towards a proof of Kelley's conjecture for finite simple graphs.
 
 ## Projects
-### Data-Driven EEG Band Discovery with Decision Trees
+### Project 1
 [Publication](https://www.mdpi.com/1424-8220/22/8/3048)
 
 Developed objective strategy for discovering optimal EEG bands based on signal power spectra using **Python**. This data-driven approach led to better characterization of the underlying power spectrum by identifying bands that outperformed the more commonly used band boundaries by a factor of two. The proposed method provides a fully automated and flexible approach to capturing key signal components and possibly discovering new indices of brain activity.
