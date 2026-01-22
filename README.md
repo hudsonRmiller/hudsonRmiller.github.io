@@ -5,7 +5,7 @@
 ## Colgate University
 **First-year student, expected graduation date May 2029**
 - 4.0 GPA
-- Benton Scholars Program- 3,000 research grant for summer 2026 to pursue independent research. Highly competitive application process.
+- Benton Scholars Program- 3,000 dollar research grant for summer 2026 to pursue independent research. Highly competitive application process.
 - Division One Heavyweight Rowing
   
 **Relevant Coursework**
