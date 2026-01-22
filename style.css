@@ -1,0 +1,42 @@
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  color: #111;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #555;
+  padding-bottom: 4px;
+}
+
+.nav a.active {
+  border-bottom: 2px solid #111;
+  color: #111;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.project-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+}
