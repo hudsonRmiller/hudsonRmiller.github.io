@@ -3,61 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recursive Polynomial Adaptive Sampling | Hudson Miller</title>
+<title>RPAS ODE Solver | Hudson Miller</title>
 <style>
+:root {
+  --primary: #660000;
+  --bg: #1a1a1a;
+  --text: #f5f5f5;
+  --section-alt: #252525;
+  --card-bg: #2a2a2a;
+}
+
 body {
   font-family:'Segoe UI',Arial,sans-serif;
-  background:#1a1a1a;
-  color:#f5f5f5;
-  margin:0; padding:0;
+  color: var(--text);
+  background: var(--bg);
+  padding: 2rem;
+  line-height: 1.6;
 }
-nav {
-  background:#0d0d0d;
-  border-bottom:3px solid #660000;
-  display:flex;
-  justify-content:center;
-  padding:1rem;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-nav a {
-  color:#f5f5f5; font-weight:bold; margin:0 1rem; text-decoration:none; border-bottom:3px solid transparent;
-}
-nav a:hover, nav a.active { color:#660000; border-bottom:3px solid #660000; }
-.container {
-  max-width:1000px;
-  margin:4rem auto;
-  padding:0 1rem;
-}
-h1 { margin-bottom:1rem; }
-iframe {
-  width:100%;
-  height:90vh;
-  border:none;
-  border-radius:12px;
-}
-p a { color:#660000; text-decoration:none; font-weight:bold; }
-p a:hover { text-decoration:underline; }
+
+h1, h2, h3 { color: var(--primary); margin-bottom: 1rem; }
+p, li { color: var(--text); }
+ul { margin-left: 1.5rem; }
+img { max-width: 100%; margin: 1rem 0; border-radius: 8px; }
+
+/* Optional: Section spacing */
+section { margin-bottom: 4rem; }
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
 </style>
+
+<!-- MathJax for LaTeX equations -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
-<nav>
-  <a href="../index.html">Home</a>
-  <a href="../index.html#projects">Projects</a>
-</nav>
+<h1>RPAS ODE Solver</h1>
+<p><strong>Author:</strong> Hudson Miller</p>
 
-<div class="container">
-  <h1>Recursive Polynomial Adaptive Sampling</h1>
-  <p>This is the full project write-up. Scroll or zoom in the PDF below to see details.</p>
-
-  <iframe src="../assets/pdfs/RPAS_Write_Up.pdf"></iframe>
-
-  <p style="margin-top:1rem;">
-    <a href="https://github.com/YOUR-GITHUB-REPO" target="_blank">View the GitHub Code</a>
+<section id="introduction">
+  <h2>Introduction</h2>
+  <p>
+    This model optimizes curve-fitting by combining polynomial fitting, adaptive sampling, and recursive iterating. 
+    The goal is to use as little compute as possible to achieve only the necessary level of accuracy when solving ordinary differential equations. 
+    This essentially means reaching "convergence" in as few iterations as possible. The required level of accuracy to achieve convergence is set by the user, as they choose the maximum error for the model to keep iterating. 
+    This model is unique because it only continues to sample in regions where there are high residuals. This allows it to not only be efficient with compute, but efficient with information. 
+    The model only samples new points when it is necessary, hence making it very useful for large datasets. The principles behind this model have broad implications beyond just differential equations such as stock market trend analysis, derivatives trading, and the optimization of neural nets by providing an efficient way to minimize loss functions.
   </p>
-</div>
+</section>
+
+<section id="iteration1">
+  <h2>Iteration 1: Initial Approximation</h2>
+  <p>
+    The blue dashed line is the curve we are trying to approximate, and the solid orange line is our approximation. 
+    The solver starts with an initial linear "guess," which is simply the dashed orange line that goes between the first and last sampled points. 
+    Red points represent the sampled points used to approximate the curve, and the residual-based correction begins from here. 
+    The purple plot at the bottom is the error plot. A polynomial of \(n\)th degree is fitted through the residual plot (not shown), and its values are subtracted from the initial guess function. 
+    This process is repeated with each iteration. The degree of the polynomial is a parameter that can be adjusted by the user before the first iteration. Here, polynomials of degree 3 are used.
+  </p>
+  <p>ODE being solved:</p>
+  <p>$$\frac{dy}{dx} = \sin(5x) - y$$</p>
+  <img src="assets/images/Iteration 1 (oscillatory).png" alt="Iteration 1 Oscillatory">
+</section>
+
+<section id="iteration2">
+  <h2>Iteration 2: Improved Approximation</h2>
+  <p>
+    The solver refines the curve by correcting the first iteration using the residuals. The approximation aligns more closely with the true solution. Additional points are adaptively sampled where residuals are high. "High" is defined as a user-adjustable multiple of the maximum error. If a residual is abnormally high, more points near that residual are sampled. These points are simply midpoints between already-sampled points.
+  </p>
+  <img src="assets/images/Iteration 2 (oscillatory).png" alt="Iteration 2 Oscillatory">
+</section>
+
+<section id="iteration3">
+  <h2>Iteration 3: Adding Points for Higher Accuracy</h2>
+  <p>The solver continues refining the approximation by sampling additional points, improving accuracy further.</p>
+  <img src="assets/images/Iteration 3 (oscillatory).png" alt="Iteration 3 Oscillatory">
+</section>
+
+<section id="iteration4">
+  <h2>Iteration 4: Significant Error Reduction</h2>
+  <p>
+    By this iteration, the approximated curve (orange solid line) closely matches the actual solution. 
+    Remaining error is concentrated in regions of high oscillation. Another sampling parameter ensures proper spacing between points. 
+    If the distance between two sample points is greater than a user-defined multiple of the average distance between sample points, a new point is added at the midpoint.
+  </p>
+  <img src="assets/images/Iteration 4 (oscillatory).png" alt="Iteration 4 Oscillatory">
+</section>
+
+<section id="iteration5">
+  <h2>Iteration 5: Near Convergence</h2>
+  <p>The curve is nearly indistinguishable from the actual solution. Sampling focuses on resolving residuals in areas with remaining errors, as indicated by the low error values.</p>
+  <img src="assets/images/Iteration 5 (oscillatory).png" alt="Iteration 5 Oscillatory">
+</section>
+
+<section id="iteration6">
+  <h2>Iteration 6: Convergence Achieved</h2>
+  <p>
+    The solver achieves convergence, where the maximum error and average error are within the specified thresholds. 
+    While average error is included here as a parameter for testing convergence, this metric would not appear in real use because it requires solving the function at every point.
+  </p>
+  <img src="assets/images/Iteration 6 (oscillatory).png" alt="Iteration 6 Oscillatory">
+</section>
+
+<section id="sharp-feature">
+  <h2>Second Example: Sharp-Feature ODE</h2>
+  <p>Equation:</p>
+  <p>$$\frac{dy}{dx} = \arctan(100(x-5))$$</p>
+
+  <h3>Iteration 1</h3>
+  <img src="assets/images/Sharp Feature ODE/Sharp Feature Iteration 1.png" alt="Sharp Feature Iteration 1">
+
+  <h3>Iteration 2</h3>
+  <img src="assets/images/Sharp Feature ODE/Sharp Feature Iteration 2.png" alt="Sharp Feature Iteration 2">
+
+  <h3>Iteration 3</h3>
+  <img src="assets/images/Sharp Feature ODE/Sharp Feature Iteration 3.png" alt="Sharp Feature Iteration 3">
+
+  <h3>Iteration 4</h3>
+  <img src="assets/images/Sharp Feature ODE/Sharp Feature Iteration 4.png" alt="Sharp Feature Iteration 4">
+</section>
 
 </body>
 </html>
