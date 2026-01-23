@@ -1,141 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hudson Miller | Portfolio</title>
-  <style>
-    /* =============================
-       Color Palette & Base Styles
-    ============================== */
-    :root {
-      --primary-color: #660000; /* Dark Red */
-      --bg-color: #1a1a1a;      /* Dark background */
-      --text-color: #f5f5f5;    /* Off-white text */
-      --card-bg: #2a2a2a;
-      --card-hover: rgba(102,0,0,0.7);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hudson Miller | Portfolio</title>
+<style>
+:root {
+  --primary-color: #660000;
+  --bg-color: #1a1a1a;
+  --text-color: #f5f5f5;
+  --section-bg-alt: #252525;
+}
 
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-color); color: var(--text-color); line-height: 1.6; }
-    a { color: var(--primary-color); text-decoration: none; }
-    h1,h2,h3 { margin-bottom: 0.5rem; }
-    p { margin-bottom: 1rem; }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  scroll-behavior: smooth; /* smooth scrolling */
+}
 
-    /* =============================
-       Navbar
-    ============================== */
-    nav { display: flex; justify-content: center; background: #0d0d0d; border-bottom: 3px solid var(--primary-color); }
-    nav a { padding: 1rem 2rem; font-weight: bold; color: var(--text-color); position: relative; transition: color 0.2s; }
-    nav a.active { color: var(--primary-color); }
-    nav a:hover { color: var(--primary-color); }
+nav {
+  position: sticky;
+  top: 0;
+  background: #0d0d0d;
+  display: flex;
+  justify-content: center;
+  border-bottom: 3px solid var(--primary-color);
+  z-index: 100;
+}
 
-    /* =============================
-       Sections
-    ============================== */
-    section { padding: 3rem 2rem; display: none; opacity: 0; animation: fadeIn 0.5s forwards; }
-    section.active { display: block; }
+nav a {
+  padding: 1rem 2rem;
+  color: var(--text-color);
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.2s, border-bottom 0.3s;
+}
 
-    @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform: translateY(0);} }
+nav a.active {
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
+}
 
-    /* =============================
-       Projects Grid
-    ============================== */
-    .project-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-top: 2rem; }
-    .card { background: var(--card-bg); border-radius: 12px; padding: 1rem; flex: 1 1 250px; cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; align-items: center; }
-    .card img { width: 100%; border-radius: 8px; margin-bottom: 1rem; object-fit: cover; }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 8px 20px var(--card-hover); }
+nav a:hover { color: var(--primary-color); }
 
-    /* =============================
-       Responsive
-    ============================== */
-    @media (max-width: 768px) {
-      nav { flex-direction: column; }
-      .card { flex: 1 1 100%; }
-    }
-  </style>
+/* Sections */
+section {
+  min-height: 100vh; /* full viewport height */
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+section:nth-of-type(even) { background: var(--section-bg-alt); }
+
+/* Projects Grid */
+.project-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.card {
+  background: #2a2a2a;
+  border-radius: 12px;
+  padding: 1rem;
+  flex: 1 1 250px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  object-fit: cover;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(102,0,0,0.7);
+}
+
+/* Fade-in animation for sections */
+section.fade-in { opacity: 0; transform: translateY(20px); animation: fadeIn 0.6s forwards; }
+@keyframes fadeIn { to { opacity:1; transform: translateY(0); } }
+</style>
 </head>
 <body>
 
-  <!-- ======= Navbar ======= -->
-  <nav>
-    <a href="#" class="tab-link active" data-tab="home">Home</a>
-    <a href="#" class="tab-link" data-tab="about">About</a>
-    <a href="#" class="tab-link" data-tab="projects">Projects</a>
-  </nav>
+<nav>
+  <a href="#home" class="nav-link active">Home</a>
+  <a href="#about" class="nav-link">About</a>
+  <a href="#projects" class="nav-link">Projects</a>
+</nav>
 
-  <!-- ======= Home Section ======= -->
-  <section id="home" class="active">
+<!-- Home Section -->
+<section id="home" class="fade-in">
   <h1>Hudson Miller</h1>
-  <!-- Headshot -->
-  <img src="assets/headshot.png" alt="Hudson Miller" style="width:150px; height:150px; border-radius:50%; margin:1rem 0; border:3px solid var(--primary-color);">
-  
   <h3>D1 Student-Athlete | Mathematics Researcher | Benton Scholar</h3>
-  <p>Welcome to my personal portfolio. Explore my projects, research, and academic work. Everything here reflects my journey as a Colgate University student with a passion for math, data science, and leadership through athletics.</p>
+  <p>Welcome to my portfolio. Scroll down to explore my research and projects.</p>
 </section>
 
+<!-- About Section -->
+<section id="about" class="fade-in">
+  <h2>About Me</h2>
+  <ul>
+    <li>First-year student, Colgate University (Grad 2029)</li>
+    <li>4.0 GPA, Benton Scholars Program, Division One Rowing</li>
+  </ul>
+  <h3>Research</h3>
+  <p>Graph theory & monomial orders, aiming toward progress on Kelley's conjecture.</p>
+</section>
 
-  <!-- ======= About Section ======= -->
-  <section id="about">
-    <h2>About Me</h2>
-    <h3>Colgate University</h3>
-    <ul>
-      <li>First-year student, expected graduation: May 2029</li>
-      <li>4.0 GPA</li>
-      <li>Benton Scholars Program: $3,000 research grant for Summer 2026</li>
-      <li>Division One Heavyweight Rowing</li>
-    </ul>
-    <h3>Relevant Coursework</h3>
-    <ul>
-      <li>Linear Algebra</li>
-      <li>Computational Statistics in R + lab</li>
-      <li>Nanophysics</li>
-      <li>Graph Theory & Abstract Algebra</li>
-      <li>14 AP Credits: Physics C (Mech & E&M), Calculus 2, Statistics, Biology, Research (AP Capstone)</li>
-    </ul>
-    <h3>Research</h3>
-    <p>Paid research internship in Graph Theory and Monomial Orders, aiming to apply reconstructability of algebraic objects to graphs, ultimately progressing toward Kelley's conjecture for finite simple graphs.</p>
-  </section>
-
-  <!-- ======= Projects Section ======= -->
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="project-grid">
-      <div class="card" onclick="openProject('https://github.com/YOUR-GITHUB-EEG')">
-        <img src="assets/headshot.png" alt="EEG Band Discovery">
-        <h3>EEG Band Discovery</h3>
-        <p>Python-based signal analysis to discover optimal EEG bands with improved characterization.</p>
-      </div>
-      <div class="card" onclick="openProject('https://github.com/YOUR-GITHUB-PM')">
-        <img src="assets/img/bike_study.jpeg" alt="Air Quality ML">
-        <h3>Air Quality ML</h3>
-        <p>Matlab models estimating ultra-fine particulate matter concentrations from biometric data.</p>
-      </div>
-      <!-- Add more cards here -->
+<!-- Projects Section -->
+<section id="projects" class="fade-in">
+  <h2>Projects</h2>
+  <div class="project-grid">
+    <div class="card" onclick="window.open('https://github.com/YOUR-GITHUB-EEG','_blank')">
+      <img src="assets/headshot.png" alt="EEG Band">
+      <h3>EEG Band Discovery</h3>
+      <p>Python-based EEG signal analysis for optimal band discovery.</p>
     </div>
-  </section>
+    <div class="card" onclick="window.open('https://github.com/YOUR-GITHUB-PM','_blank')">
+      <img src="assets/img/bike_study.jpeg" alt="Air Quality ML">
+      <h3>Air Quality ML</h3>
+      <p>Matlab models predicting ultra-fine particulate matter.</p>
+    </div>
+  </div>
+</section>
 
-  <script>
-    // ======= Tab Switching =======
-    const tabs = document.querySelectorAll('.tab-link');
-    const sections = document.querySelectorAll('section');
+<script>
+// Highlight active nav link on scroll
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".nav-link");
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', e => {
-        e.preventDefault();
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        sections.forEach(sec => sec.classList.remove('active'));
-        document.getElementById(tab.dataset.tab).classList.add('active');
-      });
-    });
-
-    // ======= Open project links =======
-    function openProject(url) {
-      window.open(url, '_blank');
-    }
-  </script>
+window.addEventListener("scroll", () => {
+  let current = "";
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 80; // adjust for nav height
+    if (scrollY >= sectionTop) { current = section.getAttribute("id"); }
+  });
+  navLinks.forEach(link => link.classList.remove("active"));
+  document.querySelector(`nav a[href="#${current}"]`).classList.add("active");
+});
+</script>
 
 </body>
 </html>
