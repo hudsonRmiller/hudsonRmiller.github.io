@@ -1,64 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hudson Miller | Portfolio</title>
 <style>
-body { font-family:'Roboto', sans-serif; background:#1a1a1a; color:#f5f5f5; margin:0; scroll-behavior:smooth; overflow-x:hidden;}
-section { min-height:100vh; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:4rem 2rem; position:relative; overflow:hidden;}
-section:nth-of-type(even){background:#252525;}
-nav {position:sticky;top:0;display:flex;justify-content:center;background:#0d0d0d;border-bottom:3px solid #660000; z-index:100;}
-nav a {padding:1rem 2rem;color:#f5f5f5;text-decoration:none;font-weight:bold;border-bottom:3px solid transparent;transition:0.3s;}
-nav a.active, nav a:hover{color:#660000;border-bottom:3px solid #660000;}
-
-/* Home background */
-#home { 
-  background: url('assets/colgate_spring.png') no-repeat center center/cover;
+:root {
+  --primary: #660000;
+  --bg: #1a1a1a;
+  --text: #f5f5f5;
+  --section-alt: #252525;
+  --card-bg: #2a2a2a;
 }
-#home::before { 
-  content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:0;
-}
-#home-content { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; }
 
-/* Headshot */
-#home-content img { 
-  width:150px; height:150px; border-radius:50%; border:3px solid #660000; object-fit:cover; box-shadow:0 10px 25px rgba(0,0,0,0.6); margin:1rem 0;
-  transition: transform 0.5s;
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Segoe UI',Arial,sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
-#home-content img:hover { transform: scale(1.05); }
+html { scroll-snap-type: y mandatory; }
 
-/* Name pop */
-#home-content h1 { 
-  font-family:'Montserrat', sans-serif; font-size:4rem; color:#f5f5f5; text-shadow: 2px 2px 8px rgba(0,0,0,0.7); 
-  animation: namePop 1s ease-out forwards;
+/* ===== Navbar ===== */
+nav {
+  position: sticky;
+  top:0;
+  display:flex;
+  justify-content:center;
+  background:#0d0d0d;
+  border-bottom:3px solid var(--primary);
+  z-index:100;
 }
-@keyframes namePop { from { transform: scale(0.9); opacity:0; } to { transform: scale(1); opacity:1; } }
+nav a {
+  padding:1rem 2rem;
+  font-weight:bold;
+  color:var(--text);
+  border-bottom:3px solid transparent;
+  transition:0.3s;
+}
+nav a.active { color:var(--primary); border-bottom:3px solid var(--primary);}
+nav a:hover{color:var(--primary);}
 
-/* Project cards */
-.project-grid { display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; margin-top:2rem; }
-.card { background:#2a2a2a; border-radius:12px; padding:1rem; flex:1 1 250px; cursor:pointer; display:flex; flex-direction:column; align-items:center; transition: transform 0.3s, box-shadow 0.3s; opacity:0; transform: translateY(50px) rotateX(5deg);}
+/* ===== Sections ===== */
+section {
+  min-height:100vh;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:4rem 2rem;
+  position:relative;
+  overflow:hidden;
+}
+section:nth-of-type(even){background:var(--section-alt);}
+
+/* ===== Fade & Slide Animations ===== */
+.fade-up { opacity:0; transform: translateY(20px); animation: fadeUp 0.7s forwards; }
+.fade-left { opacity:0; transform: translateX(-30px); animation: slideLeft 0.7s forwards; }
+.fade-right { opacity:0; transform: translateX(30px); animation: slideRight 0.7s forwards; }
+
+@keyframes fadeUp { to { opacity:1; transform: translateY(0); } }
+@keyframes slideLeft { to { opacity:1; transform: translateX(0); } }
+@keyframes slideRight { to { opacity:1; transform: translateX(0); } }
+
+/* ===== Projects Grid ===== */
+.project-grid {
+  display:flex;
+  flex-wrap:wrap;
+  gap:1.5rem;
+  justify-content:center;
+  margin-top:2rem;
+}
+.card {
+  background: var(--card-bg);
+  border-radius:12px;
+  padding:1rem;
+  flex:1 1 250px;
+  cursor:pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
 .card img { width:100%; border-radius:8px; margin-bottom:1rem; object-fit:cover; }
-.card:hover { transform: scale(1.05) translateY(-5px); box-shadow:0 15px 35px rgba(102,0,0,0.7); }
+.card:hover { transform: scale(1.05); box-shadow:0 10px 25px rgba(102,0,0,0.7); }
 
-/* Fade in project cards */
-@keyframes cardFade { to { opacity:1; transform: translateY(0) rotateX(0deg); } }
+/* ===== Responsive ===== */
+@media(max-width:768px){ nav { flex-direction: column; } .card { flex:1 1 100%; } }
 </style>
 </head>
-
 <body>
-<!-- Navbar -->
+
+<!-- ===== Navbar ===== -->
 <nav>
   <a href="#home" class="nav-link active">Home</a>
   <a href="#about" class="nav-link">About</a>
   <a href="#projects" class="nav-link">Projects</a>
 </nav>
 
-<!-- Home -->
-<section id="home">
-  <div id="home-content">
-    <h1>Hudson Miller</h1>
-    <img src="assets/headshot.png" alt="Hudson Miller">
-    <h3>D1 Student-Athlete | Mathematics Researcher | Benton Scholar</h3>
-    <p>Welcome to my portfolio. Scroll down to explore my research and projects.</p>
+<!-- ===== Home ===== -->
+<section id="home" style="
+  background: url('assets/colgate_spring.png') no-repeat center center/cover;
+  color:#f5f5f5;
+">
+  <!-- Overlay -->
+  <div style="
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.5);
+    z-index:0;
+  "></div>
+
+  <div style="position:relative; z-index:1;">
+    <h1 class="fade-up" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">Hudson Miller</h1>
+    <img src="assets/headshot.png" alt="Hudson Miller" class="fade-up"
+         style="
+           width:150px;
+           height:150px;
+           border-radius:50%;
+           border:3px solid var(--primary);
+           margin:1rem 0;
+           object-fit:cover;
+           box-shadow:0 8px 20px rgba(0,0,0,0.5);
+         ">
+    <h3 class="fade-up">D1 Student-Athlete | Mathematics Researcher | Benton Scholar</h3>
+    <p class="fade-up">Welcome to my portfolio. Scroll down to explore my research and projects.</p>
   </div>
 </section>
+
 
 <!-- ===== About ===== -->
 <section id="about">
@@ -66,26 +140,21 @@ nav a.active, nav a:hover{color:#660000;border-bottom:3px solid #660000;}
   <ul class="fade-right">
     <li>First-year student, Colgate University (Grad 2029)</li>
     <li>4.0 GPA, Benton Scholars Program, Division One Rowing</li>
-    <li>Relevant Coursework: Linear Algebra, Computational Statistics in R, Nanophysics, Graph Theory, Abstract Algebra</li>
-    <li>14 AP credits including Physics C, Calculus 2, Statistics, Biology, Research (AP Capstone)</li>
   </ul>
   <h3 class="fade-left">Research</h3>
-  <p class="fade-right">
-    Paid research internship starting first semester at Colgate. Applying principles from recently discovered results concerning reconstructability of algebraic objects to graphs. Ultimate aim: progress toward a proof of Kelley's conjecture for finite simple graphs.
-  </p>
+  <p class="fade-right">Graph theory & monomial orders, aiming toward progress on Kelley's conjecture for finite simple graphs.</p>
 </section>
-  
 
-<!-- Projects -->
+<!-- ===== Projects ===== -->
 <section id="projects">
-  <h2>Projects</h2>
-  <div class="project-grid">
-    <div class="card" onclick="window.open('https://github.com/YOUR-GITHUB-EEG','_blank')">
+  <h2 class="fade-up">Projects</h2>
+  <div class="project-grid fade-up">
+    <div class="card fade-left" onclick="window.open('https://github.com/YOUR-GITHUB-EEG','_blank')">
       <img src="assets/headshot.png" alt="EEG Band">
       <h3>EEG Band Discovery</h3>
       <p>Python-based EEG signal analysis for optimal band discovery.</p>
     </div>
-    <div class="card" onclick="window.open('https://github.com/YOUR-GITHUB-PM','_blank')">
+    <div class="card fade-right" onclick="window.open('https://github.com/YOUR-GITHUB-PM','_blank')">
       <img src="assets/img/bike_study.jpeg" alt="Air Quality ML">
       <h3>Air Quality ML</h3>
       <p>Matlab models predicting ultra-fine particulate matter.</p>
@@ -94,7 +163,7 @@ nav a.active, nav a:hover{color:#660000;border-bottom:3px solid #660000;}
 </section>
 
 <script>
-// Active nav highlight
+// ===== Highlight active nav link =====
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll(".nav-link");
 window.addEventListener("scroll", () => {
@@ -107,12 +176,14 @@ window.addEventListener("scroll", () => {
   if(current) document.querySelector(`nav a[href="#${current}"]`)?.classList.add("active");
 });
 
-// Animate project cards on load
-const cards = document.querySelectorAll('.card');
+// ===== Fade in elements sequentially =====
+const fadeEls = document.querySelectorAll('.fade-up, .fade-left, .fade-right');
 window.addEventListener('load', () => {
-  cards.forEach((card,i) => { 
-    setTimeout(()=>{ card.style.animation = 'cardFade 0.8s forwards'; }, i*200);
+  fadeEls.forEach((el, i) => {
+    setTimeout(()=>el.style.animationPlayState='running', i*150);
   });
 });
 </script>
+
 </body>
+</html>
