@@ -155,15 +155,72 @@ h1.fade-up {
 </section>
 
 <!-- ===== About ===== -->
-<section id="about">
-  <h2 class="fade-left">About Me</h2>
-  <ul class="fade-right">
-    <li>First-year student, Colgate University (Grad 2029)</li>
-    <li>4.0 GPA, Benton Scholars Program, Division One Rowing</li>
-  </ul>
-  <h3 class="fade-left">Research</h3>
-  <p class="fade-right">Graph theory & monomial orders, aiming toward progress on Kelley's conjecture for finite simple graphs.</p>
+<section id="about" style="padding:4rem 2rem; display:flex; flex-direction:column; gap:2rem; align-items:center;">
+
+  <div class="about-card fade-left">
+    <h2>Undergraduate Math Student at Colgate University</h2>
+    <p><strong>D1 student-athlete, mathematics researcher, Benton Scholar</strong></p>
+  </div>
+
+  <div class="about-card fade-right">
+    <h3>Colgate University</h3>
+    <ul>
+      <li>First-year student, expected graduation date May 2029</li>
+      <li>4.0 GPA</li>
+      <li>Benton Scholars Program – $3,000 research grant for Summer 2026</li>
+      <li>Division One Heavyweight Rowing</li>
+    </ul>
+  </div>
+
+  <div class="about-card fade-left">
+    <h3>Relevant Coursework</h3>
+    <ul>
+      <li>Linear Algebra</li>
+      <li>Computational Statistics in R + lab component</li>
+      <li>Nanophysics</li>
+      <li>Experience with graph theory and abstract algebra</li>
+      <li>14 AP credits including Physics C: Mechanics, Physics C: Electricity and Magnetism, Calculus 2, Statistics, Biology, Research (AP Capstone)</li>
+    </ul>
+  </div>
+
+  <div class="about-card fade-right">
+    <h3>Research in Graph Theory and Monomial Orders</h3>
+    <p>
+      Paid research internship starting in my first semester at Colgate. We are working to apply principles from recently discovered results concerning the reconstructability of algebraic objects to graphs. The ultimate aim is progress toward a proof of Kelley's conjecture for finite simple graphs.
+    </p>
+  </div>
+
 </section>
+
+<style>
+/* ===== About Cards ===== */
+.about-card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 6px 18px rgba(102,0,0,0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(102,0,0,0.7);
+}
+.about-card h2, .about-card h3 {
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+.about-card ul {
+  list-style: disc inside;
+  text-align:left;
+}
+.about-card p {
+  text-align:left;
+  line-height:1.6;
+}
+</style>
+
 
 <!-- ===== Projects ===== -->
 <section id="projects">
