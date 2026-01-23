@@ -52,75 +52,40 @@ a:hover { text-decoration: underline; }
   </p>
 </section>
 
-<section id="iteration1">
-  <h2>Iteration 1: Initial Approximation</h2>
-  <p>
-    The blue dashed line is the curve we are trying to approximate, and the solid orange line is our approximation. 
-    The solver starts with an initial linear "guess," which is simply the dashed orange line that goes between the first and last sampled points. 
-    Red points represent the sampled points used to approximate the curve, and the residual-based correction begins from here. 
-    The purple plot at the bottom is the error plot. A polynomial of \(n\)th degree is fitted through the residual plot (not shown), and its values are subtracted from the initial guess function. 
-    This process is repeated with each iteration. The degree of the polynomial is a parameter that can be adjusted by the user before the first iteration. Here, polynomials of degree 3 are used.
-  </p>
-  <p>ODE being solved:</p>
-  <p>$$\frac{dy}{dx} = \sin(5x) - y$$</p>
-  <img src="assets/images/Iteration 1 (oscillatory).png" alt="Iteration 1 Oscillatory">
-</section>
+<section id="iterations">
+  <h2>RPAS Iterations</h2>
 
-<section id="iteration2">
-  <h2>Iteration 2: Improved Approximation</h2>
-  <p>
-    The solver refines the curve by correcting the first iteration using the residuals. The approximation aligns more closely with the true solution. Additional points are adaptively sampled where residuals are high. "High" is defined as a user-adjustable multiple of the maximum error. If a residual is abnormally high, more points near that residual are sampled. These points are simply midpoints between already-sampled points.
-  </p>
-  <img src="assets/images/Iteration 2 (oscillatory).png" alt="Iteration 2 Oscillatory">
-</section>
+  <h3>Iteration 1: Initial Approximation</h3>
+  <p>ODE being solved: $$\frac{dy}{dx} = \sin(5x) - y$$</p>
+  <img src="projects/rpas_img_1.png" alt="Iteration 1">
 
-<section id="iteration3">
-  <h2>Iteration 3: Adding Points for Higher Accuracy</h2>
-  <p>The solver continues refining the approximation by sampling additional points, improving accuracy further.</p>
-  <img src="assets/images/Iteration 3 (oscillatory).png" alt="Iteration 3 Oscillatory">
-</section>
+  <h3>Iteration 2: Improved Approximation</h3>
+  <img src="projects/rpas_img_2.png" alt="Iteration 2">
 
-<section id="iteration4">
-  <h2>Iteration 4: Significant Error Reduction</h2>
-  <p>
-    By this iteration, the approximated curve (orange solid line) closely matches the actual solution. 
-    Remaining error is concentrated in regions of high oscillation. Another sampling parameter ensures proper spacing between points. 
-    If the distance between two sample points is greater than a user-defined multiple of the average distance between sample points, a new point is added at the midpoint.
-  </p>
-  <img src="assets/images/Iteration 4 (oscillatory).png" alt="Iteration 4 Oscillatory">
-</section>
+  <h3>Iteration 3: Adding Points for Higher Accuracy</h3>
+  <img src="projects/rpas_img_3.png" alt="Iteration 3">
 
-<section id="iteration5">
-  <h2>Iteration 5: Near Convergence</h2>
-  <p>The curve is nearly indistinguishable from the actual solution. Sampling focuses on resolving residuals in areas with remaining errors, as indicated by the low error values.</p>
-  <img src="assets/images/Iteration 5 (oscillatory).png" alt="Iteration 5 Oscillatory">
-</section>
+  <h3>Iteration 4: Significant Error Reduction</h3>
+  <img src="projects/rpas_img_4.png" alt="Iteration 4">
 
-<section id="iteration6">
-  <h2>Iteration 6: Convergence Achieved</h2>
-  <p>
-    The solver achieves convergence, where the maximum error and average error are within the specified thresholds. 
-    While average error is included here as a parameter for testing convergence, this metric would not appear in real use because it requires solving the function at every point.
-  </p>
-  <img src="assets/images/Iteration 6 (oscillatory).png" alt="Iteration 6 Oscillatory">
-</section>
+  <h3>Iteration 5: Near Convergence</h3>
+  <img src="projects/rpas_img_5.png" alt="Iteration 5">
 
-<section id="sharp-feature">
-  <h2>Second Example: Sharp-Feature ODE</h2>
-  <p>Equation:</p>
-  <p>$$\frac{dy}{dx} = \arctan(100(x-5))$$</p>
+  <h3>Iteration 6: Convergence Achieved</h3>
+  <img src="projects/rpas_img_6.png" alt="Iteration 6">
 
-  <h3>Iteration 1</h3>
-  <img src="assets/images/Sharp Feature ODE/Sharp Feature Iteration 1.png" alt="Sharp Feature Iteration 1">
+  <h3>Second Example: Sharp-Feature ODE</h3>
+  <p>Equation: $$\frac{dy}{dx} = \arctan(100(x-5))$$</p>
+  <img src="projects/rpas_img_7.png" alt="Sharp Feature Iteration 1">
 
   <h3>Iteration 2</h3>
-  <img src="assets/images/Sharp Feature ODE/Sharp Feature Iteration 2.png" alt="Sharp Feature Iteration 2">
+  <img src="projects/rpas_img_8.png" alt="Sharp Feature Iteration 2">
 
   <h3>Iteration 3</h3>
-  <img src="assets/images/Sharp Feature ODE/Sharp Feature Iteration 3.png" alt="Sharp Feature Iteration 3">
+  <img src="projects/rpas_img_9.png" alt="Sharp Feature Iteration 3">
 
   <h3>Iteration 4</h3>
-  <img src="assets/images/Sharp Feature ODE/Sharp Feature Iteration 4.png" alt="Sharp Feature Iteration 4">
+  <img src="projects/rpas_img_10.png" alt="Sharp Feature Iteration 4">
 </section>
 
 </body>
