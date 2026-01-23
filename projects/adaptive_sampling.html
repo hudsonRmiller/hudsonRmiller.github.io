@@ -3,44 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recursive Polynomial Adaptive Sampling</title>
-<link rel="stylesheet" href="../css/main.css">
+<title>Recursive Polynomial Adaptive Sampling | Hudson Miller</title>
+<style>
+body {
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#1a1a1a;
+  color:#f5f5f5;
+  margin:0; padding:0;
+}
+nav {
+  background:#0d0d0d;
+  border-bottom:3px solid #660000;
+  display:flex;
+  justify-content:center;
+  padding:1rem;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+nav a {
+  color:#f5f5f5; font-weight:bold; margin:0 1rem; text-decoration:none; border-bottom:3px solid transparent;
+}
+nav a:hover, nav a.active { color:#660000; border-bottom:3px solid #660000; }
+.container {
+  max-width:1000px;
+  margin:4rem auto;
+  padding:0 1rem;
+}
+h1 { margin-bottom:1rem; }
+iframe {
+  width:100%;
+  height:90vh;
+  border:none;
+  border-radius:12px;
+}
+p a { color:#660000; text-decoration:none; font-weight:bold; }
+p a:hover { text-decoration:underline; }
+</style>
 </head>
 <body>
 
 <nav>
   <a href="../index.html">Home</a>
-  <a href="../about.html">About</a>
-  <a href="../projects.html" class="active">Projects</a>
+  <a href="../index.html#projects">Projects</a>
 </nav>
 
-<section class="project-page">
+<div class="container">
   <h1>Recursive Polynomial Adaptive Sampling</h1>
+  <p>This is the full project write-up. Scroll or zoom in the PDF below to see details.</p>
 
-  <p>
-    This project develops a residual-based adaptive sampling framework for nonlinear regression.
-    The method iteratively refines a sparse sample set by detecting regions of high model error
-    and locally increasing resolution.
+  <iframe src="../assets/pdfs/RPAS_Write_Up.pdf"></iframe>
+
+  <p style="margin-top:1rem;">
+    <a href="https://github.com/YOUR-GITHUB-REPO" target="_blank">View the GitHub Code</a>
   </p>
-
-  <h2>Key Ideas</h2>
-  <ul>
-    <li>Polynomial initial guess</li>
-    <li>Residual spline correction</li>
-    <li>Error-driven point insertion</li>
-    <li>Global polynomial envelope</li>
-  </ul>
-
-  <h2>Results</h2>
-  <img src="../assets/headshot.png" class="project-image">
-
-  <h2>Code</h2>
-  <p>
-    <a href="https://github.com/hudsonRmiller/Recursive-Polynomial-Adaptive-Sampling" target="_blank">
-      View on GitHub
-    </a>
-  </p>
-</section>
+</div>
 
 </body>
 </html>
