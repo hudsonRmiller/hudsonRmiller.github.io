@@ -2,29 +2,136 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hudson Miller</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hudson Miller | Portfolio</title>
+  <style>
+    /* =============================
+       Color Palette & Base Styles
+    ============================== */
+    :root {
+      --primary-color: #660000; /* Dark Red */
+      --bg-color: #1a1a1a;      /* Dark background */
+      --text-color: #f5f5f5;    /* Off-white text */
+      --card-bg: #2a2a2a;
+      --card-hover: rgba(102,0,0,0.7);
+    }
+
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+    a { color: var(--primary-color); text-decoration: none; }
+    h1,h2,h3 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+
+    /* =============================
+       Navbar
+    ============================== */
+    nav { display: flex; justify-content: center; background: #0d0d0d; border-bottom: 3px solid var(--primary-color); }
+    nav a { padding: 1rem 2rem; font-weight: bold; color: var(--text-color); position: relative; transition: color 0.2s; }
+    nav a.active { color: var(--primary-color); }
+    nav a:hover { color: var(--primary-color); }
+
+    /* =============================
+       Sections
+    ============================== */
+    section { padding: 3rem 2rem; display: none; opacity: 0; animation: fadeIn 0.5s forwards; }
+    section.active { display: block; }
+
+    @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform: translateY(0);} }
+
+    /* =============================
+       Projects Grid
+    ============================== */
+    .project-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-top: 2rem; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 1rem; flex: 1 1 250px; cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; align-items: center; }
+    .card img { width: 100%; border-radius: 8px; margin-bottom: 1rem; object-fit: cover; }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 8px 20px var(--card-hover); }
+
+    /* =============================
+       Responsive
+    ============================== */
+    @media (max-width: 768px) {
+      nav { flex-direction: column; }
+      .card { flex: 1 1 100%; }
+    }
+  </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#660000;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.html">Home</a>
-    <a class="nav-link" href="about.html">About</a>
-    <a class="nav-link" href="projects.html">Projects</a>
-  </div>
-</nav>
+  <!-- ======= Navbar ======= -->
+  <nav>
+    <a href="#" class="tab-link active" data-tab="home">Home</a>
+    <a href="#" class="tab-link" data-tab="about">About</a>
+    <a href="#" class="tab-link" data-tab="projects">Projects</a>
+  </nav>
 
+  <!-- ======= Home Section ======= -->
+  <section id="home" class="active">
+    <h1>Hudson Miller</h1>
+    <h3>D1 Student-Athlete | Mathematics Researcher | Benton Scholar</h3>
+    <p>Welcome to my personal portfolio. Explore my projects, research, and academic work. Everything here reflects my journey as a Colgate University student with a passion for math, data science, and leadership through athletics.</p>
+  </section>
 
-<main>
-  <h1>Hudson Miller</h1>
-  <p>
-    Undergraduate mathematics student at Colgate University.
-    Interests include nonlinear regression, graph theory,
-    and applied machine learning.
-  </p>
-</main>
+  <!-- ======= About Section ======= -->
+  <section id="about">
+    <h2>About Me</h2>
+    <h3>Colgate University</h3>
+    <ul>
+      <li>First-year student, expected graduation: May 2029</li>
+      <li>4.0 GPA</li>
+      <li>Benton Scholars Program: $3,000 research grant for Summer 2026</li>
+      <li>Division One Heavyweight Rowing</li>
+    </ul>
+    <h3>Relevant Coursework</h3>
+    <ul>
+      <li>Linear Algebra</li>
+      <li>Computational Statistics in R + lab</li>
+      <li>Nanophysics</li>
+      <li>Graph Theory & Abstract Algebra</li>
+      <li>14 AP Credits: Physics C (Mech & E&M), Calculus 2, Statistics, Biology, Research (AP Capstone)</li>
+    </ul>
+    <h3>Research</h3>
+    <p>Paid research internship in Graph Theory and Monomial Orders, aiming to apply reconstructability of algebraic objects to graphs, ultimately progressing toward Kelley's conjecture for finite simple graphs.</p>
+  </section>
 
+  <!-- ======= Projects Section ======= -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project-grid">
+      <div class="card" onclick="openProject('https://github.com/YOUR-GITHUB-EEG')">
+        <img src="assets/headshot.png" alt="EEG Band Discovery">
+        <h3>EEG Band Discovery</h3>
+        <p>Python-based signal analysis to discover optimal EEG bands with improved characterization.</p>
+      </div>
+      <div class="card" onclick="openProject('https://github.com/YOUR-GITHUB-PM')">
+        <img src="assets/img/bike_study.jpeg" alt="Air Quality ML">
+        <h3>Air Quality ML</h3>
+        <p>Matlab models estimating ultra-fine particulate matter concentrations from biometric data.</p>
+      </div>
+      <!-- Add more cards here -->
+    </div>
+  </section>
+
+  <script>
+    // ======= Tab Switching =======
+    const tabs = document.querySelectorAll('.tab-link');
+    const sections = document.querySelectorAll('section');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', e => {
+        e.preventDefault();
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        sections.forEach(sec => sec.classList.remove('active'));
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // ======= Open project links =======
+    function openProject(url) {
+      window.open(url, '_blank');
+    }
+  </script>
 
 </body>
 </html>
