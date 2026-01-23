@@ -59,7 +59,28 @@ section {
 section:nth-of-type(even){background:var(--section-alt);}
 
 /* ===== Fade & Slide Animations ===== */
-.fade-up { opacity:0; transform: translateY(20px); animation: fadeUp 0.7s forwards; }
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  text-shadow: 0 0 0 rgba(0,0,0,0);
+  animation: fadeUpShadow 0.9s ease-out forwards;
+  animation-play-state: paused; /* keeps your JS stagger working */
+}
+
+/* Stronger, hero-style version ONLY for the name */
+h1.fade-up {
+  font-size: 2em;
+}
+
+@keyframes fadeUpShadow {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    text-shadow:
+      0 4px 6px rgba(0,0,0,0.35),
+      0 12px 25px rgba(0,0,0,0.25);
+  }
+}
 .fade-left { opacity:0; transform: translateX(-30px); animation: slideLeft 0.7s forwards; }
 .fade-right { opacity:0; transform: translateX(30px); animation: slideRight 0.7s forwards; }
 
