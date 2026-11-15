@@ -52,6 +52,20 @@
 
 <section class="block">
   <div class="wrap split">
+    <h2>Recursive Polynomial Adaptive Sampling</h2>
+    <div>
+      <p class="what" style="color:var(--muted);max-width:44em">This model optimizes curve-fitting by combining polynomial fitting, adaptive sampling, and recursive iterating. The goal is to use as little compute as possible to achieve only the necessary level of accuracy when solving ordinary differential equations. It samples new points only where residuals are high, making it efficient for large datasets.</p>
+      <div class="stage" id="rpas" style="margin-top:28px">
+        <span class="note" data-iter>Iteration 1</span>
+        <canvas style="height:clamp(300px,36vw,440px)" role="img" aria-label="An approximation converging to the actual solution over successive iterations as sampled points are added where the error is high"></canvas>
+      </div>
+      <p class="links"><a href="assets/pdfs/RPAS_Write_Up.pdf">Write-up</a><a href="https://github.com/hudsonRmiller/Recursive-Polynomial-Adaptive-Sampling">Code</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split">
     <h2>Research Experience</h2>
     <div class="rows">
       <div class="row"><h3>Undergraduate Research Fellow | Colgate University</h3><span class="when">October 2025–Present</span>
@@ -59,7 +73,7 @@
         <p class="what">Conduct paid research in algebraic graph theory, investigating connections between existing work on reconstructing monomial orders and the graph reconstruction conjecture.</p></div>
       <div class="row"><h3>Summer Research Fellow | Colgate University</h3><span class="when">June–August 2026</span>
         <p class="what">Completed a paid, faculty-initiated fellowship (40 hours per week), extending academic-year research in algebraic graph theory and pursuing related problems in algebra.</p></div>
-      <div class="row"><h3>CIMPA School in Combinatorics and Graph Theory</h3><span class="when">August 2026</span>
+      <div class="row"><div class="withmark"><img class="mark chip" src="assets/img/logo-cimpa.png" alt=""><h3>CIMPA School in Combinatorics and Graph Theory</h3></div><span class="when">August 2026</span>
         <p class="what">San José, Costa Rica. Studied graph theory, matroids, symmetric functions, and polytopes; presented research.</p></div>
     </div>
   </div>

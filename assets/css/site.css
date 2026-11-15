@@ -121,3 +121,57 @@ footer p { max-width: 52em; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .rise, .hero > img { animation: none; } .fig *, .frames img { transition: none; } }
 @media (max-width: 480px) { .nav .wrap { gap: 12px; } .nav ul { gap: 13px; } .nav li a { font-size: 13.5px; } .nav .name { font-size: 14.5px; } }
+
+/* ---- logos ---- */
+.logos { display: flex; align-items: center; gap: clamp(24px, 4vw, 52px); flex-wrap: wrap; padding-block: 26px; border-bottom: 1px solid var(--line); }
+.logos img { height: 40px; width: auto; }
+.logos .chip, .mark.chip { background: #fff; border-radius: 6px; padding: 7px 12px; height: 46px; }
+.mark { height: 30px; width: auto; flex: none; }
+.withmark { display: flex; align-items: center; gap: 14px; }
+.row .withmark { grid-column: 1; }
+
+/* ---- page top with a photograph behind it ---- */
+.top.photo-bg, .block.photo-bg { position: relative; overflow: hidden; }
+.photo-bg > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.photo-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,16,14,.94) 0%, rgba(10,16,14,.8) 50%, rgba(10,16,14,.55) 100%); }
+.block.photo-bg::after { background: linear-gradient(90deg, rgba(10,16,14,.95) 0%, rgba(10,16,14,.86) 55%, rgba(10,16,14,.66) 100%); }
+.photo-bg > .wrap { position: relative; z-index: 1; }
+.top.photo-bg { padding-block: clamp(110px, 16vw, 220px) clamp(40px, 5vw, 64px); }
+
+/* ---- featured projects ---- */
+.feature { padding-block: clamp(48px, 6vw, 88px); border-top: 1px solid var(--line); }
+.feature:first-of-type { border-top: 0; padding-top: 0; }
+.feature-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 4vw, 64px); align-items: end; margin-bottom: clamp(24px, 3vw, 40px); }
+.feature-head h3 { font-size: clamp(28px, 3.2vw, 42px); letter-spacing: -0.035em; line-height: 1.05; }
+.feature-head p { color: var(--muted); max-width: 40em; }
+.feature-head p + p { margin-top: 10px; }
+@media (max-width: 880px) { .feature-head { grid-template-columns: 1fr; align-items: start; } }
+.stage { position: relative; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--bg-2); }
+.stage > img { width: 100%; }
+.stage canvas { display: block; width: 100%; }
+.stage .note { position: absolute; left: 18px; top: 14px; color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
+.stage svg.over { position: absolute; inset: 0; width: 100%; height: 100%; }
+.over path { fill: none; stroke: #eef2ee; stroke-width: 1.4; opacity: .5; vector-effect: non-scaling-stroke; }
+.over path.hot { stroke: #ff8b94; stroke-width: 3; opacity: 1; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.6s .3s cubic-bezier(.4,0,.2,1) forwards; }
+.over line { stroke: #eef2ee; stroke-width: 1; opacity: .55; vector-effect: non-scaling-stroke; }
+.over text { fill: #eef2ee; font-family: var(--sans); font-size: 17px; opacity: .9; }
+.stage.shade::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,16,14,.5), rgba(10,16,14,.15)); pointer-events: none; }
+.stage.shade svg.over { z-index: 1; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.viz { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.viz figure { margin: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 16px 16px 10px; min-width: 0; }
+.viz figcaption { font-size: 16px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 8px; display: flex; justify-content: space-between; gap: 10px; }
+.viz figcaption span { color: var(--faint); font-weight: 400; }
+.viz canvas { display: block; width: 100%; height: 220px; }
+@media (max-width: 900px) { .viz { grid-template-columns: 1fr; } }
+.shots { display: grid; grid-template-columns: 7fr 5fr; gap: 16px; }
+.shots .col { display: grid; gap: 16px; }
+@media (max-width: 760px) { .shots { grid-template-columns: 1fr; } }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 3vw, 40px); }
+.pair h3 { font-size: clamp(24px, 2.4vw, 30px); letter-spacing: -0.03em; margin-top: 18px; }
+.pair p { color: var(--muted); margin-top: 8px; max-width: 34em; }
+@media (max-width: 760px) { .pair { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .over path.hot { animation: none; stroke-dashoffset: 0; } }
+.shots > .stage > img { height: 100%; object-fit: cover; object-position: 0 0; }
+.over path { opacity: .34; }
+.mark.chip { height: 36px; padding: 6px 10px; }

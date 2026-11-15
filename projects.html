@@ -25,92 +25,92 @@
 
 <section class="block" id="math">
   <div class="wrap">
-    <h2 style="margin-bottom:36px">Math</h2>
-    <div class="grid">
-      <article class="cell wide">
-        <div class="duo">
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <h3>Recursive Polynomial Adaptive Sampling</h3>
-            <p>This model optimizes curve-fitting by combining polynomial fitting, adaptive sampling, and recursive iterating. The goal is to use as little compute as possible to achieve only the necessary level of accuracy when solving ordinary differential equations. It samples new points only where residuals are high, making it efficient for large datasets.</p>
-            <p class="links"><a href="assets/pdfs/RPAS_Write_Up.pdf">Write-up</a><a href="https://github.com/hudsonRmiller/Recursive-Polynomial-Adaptive-Sampling">Code</a></p>
-          </div>
-          <div class="frames"><img src="assets/img/rpas/1.png" alt="RPAS iteration 1" class="on"><img src="assets/img/rpas/2.png" alt="RPAS iteration 2"><img src="assets/img/rpas/3.png" alt="RPAS iteration 3"><img src="assets/img/rpas/4.png" alt="RPAS iteration 4"><img src="assets/img/rpas/5.png" alt="RPAS iteration 5"><img src="assets/img/rpas/6.png" alt="RPAS iteration 6"></div>
+    <h2 style="margin-bottom:clamp(32px,4vw,56px)">Math</h2>
+
+    <article class="feature">
+      <div class="feature-head">
+        <div class="withmark"><img class="mark" style="height:44px" src="assets/img/logo-colgate-rowing.png" alt=""><h3>Colgate Rowing Telemetry and Data Analysis</h3></div>
+        <div>
+          <p>Team dashboard for Peach PowerLine data from Colgate's 8+. Coaches upload sessions; every athlete can see every session (whole boat); each athlete has a season page with their own trends.</p>
+          <p>This is some work I did for the Colgate rowing team. We walk through data cleaning, summary, analysis, and modelling.</p>
+          <p class="links"><a href="https://colgate-rowing.vercel.app">colgate-rowing.vercel.app</a><a href="https://hudson-miller.github.io/">Data analysis</a></p>
         </div>
-      </article>
-      <article class="cell">
-        <h3>Route Right</h3>
-        <p>A real cost model and allocation optimizer for routing a trading firm's monthly flow across crypto venues with tiered fees, token discounts, market-maker programs, and finite liquidity.</p>
-        <p class="links"><a href="https://github.com/hudsonRmiller/routeright/blob/main/MODEL.pdf">Formal spec</a><a href="https://github.com/hudsonRmiller/routeright">Code</a></p>
-      </article>
-      <article class="cell">
-        <h3>Colgate Men's Rowing Performance Data</h3>
-        <p>This is some work I did for the Colgate rowing team. We walk through data cleaning, summary, analysis, and modelling.</p>
-        <p class="links"><a href="https://hudson-miller.github.io/">Analysis</a></p>
-      </article>
-      <article class="cell">
+      </div>
+      <div class="stage shade">
+        <img src="assets/img/single.jpg" alt="Hudson Miller rowing a single, with force curves drawn over the photograph">
+        <svg class="over" viewBox="0 0 1000 667" preserveAspectRatio="none" aria-hidden="true"><line x1="70" y1="590" x2="930" y2="590"/><line x1="106" y1="590" x2="106" y2="600"/><text x="106" y="624" text-anchor="middle">−60°</text><line x1="270" y1="590" x2="270" y2="600"/><text x="270" y="624" text-anchor="middle">−40°</text><line x1="434" y1="590" x2="434" y2="600"/><text x="434" y="624" text-anchor="middle">−20°</text><line x1="598" y1="590" x2="598" y2="600"/><text x="598" y="624" text-anchor="middle">0°</text><line x1="762" y1="590" x2="762" y2="600"/><text x="762" y="624" text-anchor="middle">20°</text><path d="M131.0 590.0 L143.3 563.9 L155.6 535.2 L167.9 506.8 L180.2 479.3 L192.5 452.9 L204.8 428.0 L217.1 404.6 L229.4 382.8 L241.7 362.6 L254.0 344.1 L266.3 327.3 L278.6 312.1 L290.9 298.5 L303.2 286.6 L315.5 276.3 L327.8 267.6 L340.1 260.4 L352.4 254.7 L364.7 250.5 L377.0 247.7 L389.3 246.2 L401.6 246.1 L413.9 247.2 L426.2 249.6 L438.5 253.1 L450.8 257.7 L463.1 263.3 L475.4 269.9 L487.7 277.5 L500.0 285.9 L512.3 295.0 L524.6 305.0 L536.9 315.5 L549.2 326.7 L561.5 338.4 L573.8 350.6 L586.1 363.1 L598.4 376.0 L610.7 389.1 L623.0 402.4 L635.3 415.9 L647.6 429.3 L659.9 442.7 L672.2 456.0 L684.5 469.1 L696.8 482.0 L709.1 494.5 L721.4 506.6 L733.7 518.2 L746.0 529.2 L758.3 539.6 L770.6 549.2 L782.9 558.0 L795.2 565.9 L807.5 572.9 L819.8 578.8 L832.1 583.5 L844.4 587.1 L856.7 589.2 L869.0 590.0"/><path d="M147.4 590.0 L159.6 575.5 L171.7 555.0 L183.9 532.2 L196.1 508.5 L208.2 484.4 L220.4 460.4 L232.5 436.9 L244.7 414.2 L256.9 392.4 L269.0 371.6 L281.2 352.1 L293.4 333.8 L305.5 316.8 L317.7 301.3 L329.9 287.3 L342.0 274.7 L354.2 263.6 L366.3 254.1 L378.5 246.0 L390.7 239.5 L402.8 234.5 L415.0 230.9 L427.2 228.8 L439.3 228.1 L451.5 228.8 L463.6 230.8 L475.8 234.1 L488.0 238.7 L500.1 244.4 L512.3 251.4 L524.5 259.3 L536.6 268.3 L548.8 278.3 L561.0 289.1 L573.1 300.7 L585.3 313.1 L597.4 326.1 L609.6 339.6 L621.8 353.7 L633.9 368.2 L646.1 383.0 L658.3 398.0 L670.4 413.1 L682.6 428.3 L694.8 443.4 L706.9 458.3 L719.1 473.0 L731.2 487.4 L743.4 501.2 L755.6 514.5 L767.7 527.1 L779.9 538.9 L792.1 549.8 L804.2 559.6 L816.4 568.3 L828.5 575.7 L840.7 581.7 L852.9 586.2 L865.0 589.0 L877.2 590.0"/><path d="M122.8 590.0 L135.1 561.7 L147.4 531.1 L159.7 500.8 L172.0 471.4 L184.3 443.2 L196.6 416.3 L208.9 390.9 L221.2 367.2 L233.5 345.0 L245.8 324.4 L258.1 305.5 L270.4 288.3 L282.7 272.7 L295.0 258.8 L307.3 246.5 L319.6 235.8 L331.9 226.6 L344.2 219.0 L356.5 212.9 L368.8 208.3 L381.1 205.2 L393.4 203.4 L405.7 203.0 L418.0 203.9 L430.3 206.1 L442.6 209.5 L454.9 214.1 L467.2 219.8 L479.5 226.5 L491.8 234.3 L504.1 243.0 L516.4 252.6 L528.7 263.1 L541.0 274.3 L553.3 286.3 L565.6 298.9 L577.9 312.0 L590.2 325.7 L602.5 339.9 L614.8 354.4 L627.1 369.2 L639.4 384.3 L651.7 399.5 L664.0 414.8 L676.3 430.1 L688.6 445.3 L700.9 460.3 L713.2 475.0 L725.5 489.4 L737.8 503.4 L750.1 516.7 L762.4 529.4 L774.7 541.4 L787.0 552.4 L799.3 562.3 L811.6 571.1 L823.9 578.5 L836.2 584.4 L848.5 588.3 L860.8 590.0"/><path d="M155.6 590.0 L167.8 580.1 L179.9 563.7 L192.1 543.9 L204.3 522.2 L216.4 499.3 L228.6 475.7 L240.7 451.9 L252.9 428.3 L265.1 405.0 L277.2 382.3 L289.4 360.4 L301.6 339.5 L313.7 319.6 L325.9 301.0 L338.0 283.6 L350.2 267.7 L362.4 253.1 L374.5 240.1 L386.7 228.6 L398.9 218.7 L411.0 210.3 L423.2 203.5 L435.4 198.3 L447.5 194.8 L459.7 192.7 L471.8 192.3 L484.0 193.3 L496.2 195.9 L508.3 199.9 L520.5 205.3 L532.7 212.1 L544.8 220.2 L557.0 229.5 L569.2 240.0 L581.3 251.5 L593.5 264.1 L605.6 277.7 L617.8 292.1 L630.0 307.2 L642.1 323.0 L654.3 339.4 L666.5 356.2 L678.6 373.4 L690.8 390.8 L703.0 408.4 L715.1 425.9 L727.3 443.3 L739.4 460.5 L751.6 477.2 L763.8 493.4 L775.9 509.0 L788.1 523.6 L800.3 537.3 L812.4 549.8 L824.6 561.0 L836.7 570.7 L848.9 578.7 L861.1 584.7 L873.2 588.6 L885.4 590.0" class="hot" pathLength="1"/><path d="M139.2 590.0 L151.4 551.4 L163.5 514.3 L175.7 479.4 L187.9 446.8 L200.0 416.5 L212.2 388.5 L224.3 362.8 L236.5 339.3 L248.7 317.9 L260.8 298.7 L273.0 281.6 L285.2 266.4 L297.3 253.2 L309.5 241.9 L321.6 232.5 L333.8 224.8 L346.0 218.8 L358.1 214.4 L370.3 211.6 L382.5 210.3 L394.6 210.4 L406.8 211.9 L419.0 214.7 L431.1 218.8 L443.3 224.0 L455.4 230.3 L467.6 237.6 L479.8 245.9 L491.9 255.1 L504.1 265.1 L516.3 275.9 L528.4 287.3 L540.6 299.4 L552.8 312.0 L564.9 325.0 L577.1 338.5 L589.2 352.2 L601.4 366.3 L613.6 380.5 L625.7 394.8 L637.9 409.2 L650.1 423.5 L662.2 437.7 L674.4 451.7 L686.6 465.5 L698.7 478.9 L710.9 491.9 L723.0 504.5 L735.2 516.5 L747.4 527.9 L759.5 538.5 L771.7 548.4 L783.9 557.5 L796.0 565.6 L808.2 572.6 L820.3 578.6 L832.5 583.5 L844.7 587.0 L856.8 589.2 L869.0 590.0"/><path d="M163.8 590.0 L175.7 580.7 L187.6 565.1 L199.5 546.3 L211.4 525.6 L223.2 503.9 L235.1 481.6 L247.0 459.2 L258.9 437.0 L270.8 415.4 L282.7 394.4 L294.6 374.3 L306.5 355.2 L318.4 337.3 L330.3 320.7 L342.1 305.5 L354.0 291.6 L365.9 279.2 L377.8 268.4 L389.7 259.0 L401.6 251.2 L413.5 245.0 L425.4 240.3 L437.3 237.2 L449.2 235.5 L461.1 235.4 L472.9 236.7 L484.8 239.4 L496.7 243.5 L508.6 248.8 L520.5 255.5 L532.4 263.3 L544.3 272.2 L556.2 282.1 L568.1 293.0 L580.0 304.8 L591.8 317.4 L603.7 330.7 L615.6 344.6 L627.5 359.0 L639.4 373.8 L651.3 388.9 L663.2 404.2 L675.1 419.7 L687.0 435.1 L698.9 450.4 L710.7 465.4 L722.6 480.1 L734.5 494.4 L746.4 508.1 L758.3 521.1 L770.2 533.2 L782.1 544.5 L794.0 554.8 L805.9 563.9 L817.8 571.8 L829.6 578.4 L841.5 583.5 L853.4 587.2 L865.3 589.3 L877.2 590.0"/><path d="M147.4 590.0 L159.2 582.0 L170.9 568.8 L182.7 553.2 L194.4 535.9 L206.2 517.8 L217.9 499.1 L229.7 480.2 L241.4 461.3 L253.2 442.6 L264.9 424.3 L276.7 406.6 L288.4 389.5 L300.2 373.2 L311.9 357.8 L323.7 343.3 L335.5 329.7 L347.2 317.2 L359.0 305.9 L370.7 295.6 L382.5 286.5 L394.2 278.6 L406.0 271.9 L417.7 266.4 L429.5 262.2 L441.2 259.2 L453.0 257.4 L464.7 256.8 L476.5 257.3 L488.2 259.1 L500.0 262.0 L511.8 266.1 L523.5 271.3 L535.3 277.5 L547.0 284.7 L558.8 292.9 L570.5 302.1 L582.3 312.1 L594.0 323.0 L605.8 334.6 L617.5 346.9 L629.3 359.8 L641.0 373.3 L652.8 387.3 L664.5 401.7 L676.3 416.4 L688.1 431.3 L699.8 446.3 L711.6 461.4 L723.3 476.3 L735.1 491.0 L746.8 505.4 L758.6 519.3 L770.3 532.5 L782.1 545.0 L793.8 556.5 L805.6 566.8 L817.3 575.6 L829.1 582.8 L840.8 587.8 L852.6 590.0"/><path d="M172.0 590.0 L183.6 566.7 L195.2 541.7 L206.8 517.1 L218.5 493.1 L230.1 470.1 L241.7 448.2 L253.3 427.5 L264.9 408.0 L276.6 389.8 L288.2 372.8 L299.8 357.2 L311.4 342.9 L323.0 329.8 L334.6 318.1 L346.2 307.6 L357.9 298.4 L369.5 290.4 L381.1 283.7 L392.7 278.1 L404.3 273.8 L415.9 270.6 L427.6 268.5 L439.2 267.6 L450.8 267.7 L462.4 268.8 L474.0 271.0 L485.6 274.1 L497.3 278.1 L508.9 283.0 L520.5 288.8 L532.1 295.4 L543.7 302.7 L555.4 310.8 L567.0 319.6 L578.6 328.9 L590.2 338.9 L601.8 349.4 L613.4 360.4 L625.0 371.9 L636.7 383.7 L648.3 395.8 L659.9 408.2 L671.5 420.8 L683.1 433.6 L694.8 446.5 L706.4 459.3 L718.0 472.1 L729.6 484.8 L741.2 497.3 L752.8 509.4 L764.5 521.2 L776.1 532.6 L787.7 543.3 L799.3 553.4 L810.9 562.6 L822.5 570.9 L834.1 578.1 L845.8 583.9 L857.4 588.1 L869.0 590.0"/></svg>
+      </div>
+      <div class="viz">
+        <figure><figcaption>Force / angle <span>kgf</span></figcaption><canvas id="row-curves" role="img" aria-label="Gate force against oar angle for each seat, one seat highlighted"></canvas></figure>
+        <figure><figcaption>Gate force <span>kgf</span></figcaption><canvas id="row-trace" role="img" aria-label="Gate force over time, stroke after stroke"></canvas></figure>
+        <figure><figcaption>Session <span>crew power, W</span></figcaption><canvas id="row-session" role="img" aria-label="Crew power across a session"></canvas></figure>
+      </div>
+      <p style="color:var(--faint);font-size:15px;margin-top:12px">Illustrative data.</p>
+    </article>
+
+    <article class="feature">
+      <div class="feature-head">
         <h3>graph.theory.data.destroyer</h3>
-        <!-- YOUR TEXT: description of the nearest-neighbour coarsening demos -->
-        <p class="links"><a href="https://github.com/hudsonRmiller/graph.theory.data.destroyer">Code</a></p>
-      </article>
-      <article class="cell">
-        <h3>Computational Statistics in R</h3>
-        <p>A website for my statistics, computing, and math work at Colgate University</p>
-        <p class="links"><a href="https://hudson-miller.github.io/">Labs</a></p>
-      </article>
-    </div>
+        <div>
+          <!-- YOUR TEXT: description -->
+          <p class="links" style="margin-top:0"><a href="https://github.com/hudsonRmiller/graph.theory.data.destroyer">Code</a></p>
+        </div>
+      </div>
+      <div class="stage" id="destroyer">
+        <span class="note" data-level></span>
+        <canvas style="height:clamp(300px,40vw,480px)" role="img" aria-label="A noisy point cloud joined by nearest-neighbour edges and collapsed to component centroids, repeatedly"></canvas>
+      </div>
+    </article>
   </div>
 </section>
 
 <section class="block" id="software">
   <div class="wrap">
-    <h2 style="margin-bottom:36px">Software</h2>
-    <div class="grid">
-      <article class="cell wide">
-        <div class="duo">
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <h3>Colgate Rowing Telemetry</h3>
-            <p>Team dashboard for Peach PowerLine data from Colgate's 8+. Coaches upload sessions; every athlete can see every session (whole boat); each athlete has a season page with their own trends.</p>
-            <p class="links"><a href="https://colgate-rowing.vercel.app">colgate-rowing.vercel.app</a></p>
-          </div>
-          <div class="photo" style="aspect-ratio:3/2"><img src="assets/img/single.jpg" alt="Hudson Miller rowing a single" loading="lazy"></div>
-        </div>
-      </article>
-      <article class="cell">
-        <h3>ProjectVerify</h3>
-        <p>Obtained grant funding to build an early-stage software company offering AI "thesis defense" interviews for technical projects.</p>
-        <p class="links"><a href="https://www.useprojectverify.com">useprojectverify.com</a></p>
-      </article>
-      <article class="cell">
+    <h2 style="margin-bottom:clamp(32px,4vw,56px)">Software</h2>
+
+    <article class="feature">
+      <div class="feature-head">
         <h3>AllDorms</h3>
-        <p>Built a college packing-list website for new parents; generated more than $11,000 in purchases.</p>
-        <p class="links"><a href="https://alldorms.net">alldorms.net</a><a href="https://github.com/hudsonRmiller/alldorms">Code</a></p>
-      </article>
-      <article class="cell">
-        <h3>White Space Explorer</h3>
-        <p>Map a research field's intellectual landscape and surface concrete unexplored gaps as publishable hypotheses.</p>
-        <p class="links"><a href="https://github.com/hudsonRmiller/white-space-explorer">Code</a></p>
-      </article>
-      <article class="cell">
-        <h3>CramKit</h3>
-        <p>Drop your syllabus or notes and get a personalized study plan and AI-generated practice exam in seconds.</p>
-        <p class="links"><a href="https://github.com/hudsonRmiller/cramkit">Code</a></p>
-      </article>
-      <article class="cell wide">
-        <h3>FinalCalc</h3>
-        <p>What Do I Need on My Final? Free Final Grade Calculator</p>
-        <p class="links"><a href="https://github.com/hudsonRmiller/finalcalc">Code</a></p>
-      </article>
-      <article class="cell wide">
-        <div class="duo">
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <h3>TireTap</h3>
-            <p>A mountain bike game for your phone</p>
-            <p class="links"><a href="https://tiretap.racing">tiretap.racing</a></p>
-          </div>
-          <div class="photo" style="aspect-ratio:1200/630"><img src="assets/img/tiretap.jpg" alt="TireTap" loading="lazy"></div>
+        <div>
+          <p>Built a college packing-list website for new parents; generated more than $11,000 in purchases.</p>
+          <p class="links"><a href="https://alldorms.net">alldorms.net</a><a href="https://github.com/hudsonRmiller/alldorms">Code</a></p>
         </div>
-      </article>
-    </div>
+      </div>
+      <div class="shots">
+        <div class="stage"><img src="assets/img/alldorms-home.jpg" alt="AllDorms home page" loading="lazy"></div>
+        <div class="col">
+          <div class="stage"><img src="assets/img/alldorms-colgate.jpg" alt="AllDorms guide for Colgate" loading="lazy"></div>
+          <div class="stage"><img src="assets/img/alldorms-guide.jpg" alt="AllDorms housing section for Colgate" loading="lazy"></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="pair">
+        <div>
+          <div class="stage"><img src="assets/img/projectverify.jpg" alt="ProjectVerify" loading="lazy"></div>
+          <h3>ProjectVerify</h3>
+          <p>Obtained grant funding to build an early-stage software company offering AI "thesis defense" interviews for technical projects.</p>
+          <p class="links"><a href="https://www.useprojectverify.com">useprojectverify.com</a></p>
+        </div>
+        <div>
+          <div class="stage"><img src="assets/img/tiretap.jpg" alt="TireTap" loading="lazy" style="aspect-ratio:1440/900;object-fit:cover"></div>
+          <h3>TireTap</h3>
+          <p>A mountain bike game for your phone</p>
+          <p class="links"><a href="https://tiretap.racing">tiretap.racing</a></p>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="feature-head" style="margin-bottom:0">
+        <h3>White Space Explorer</h3>
+        <div>
+          <p>Map a research field's intellectual landscape and surface concrete unexplored gaps as publishable hypotheses.</p>
+          <p class="links"><a href="https://github.com/hudsonRmiller/white-space-explorer">Code</a></p>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
