@@ -1,236 +1,454 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hudson Miller | Portfolio</title>
-<style>
-:root {
-  --primary: #660000;
-  --bg: #1a1a1a;
-  --text: #f5f5f5;
-  --section-alt: #252525;
-  --card-bg: #2a2a2a;
-}
-
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family:'Segoe UI',Arial,sans-serif;
-  color: var(--text);
-  background: var(--bg);
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
-html { scroll-snap-type: y mandatory; }
-
-/* ===== Navbar ===== */
-nav {
-  position: sticky;
-  top:0;
-  display:flex;
-  justify-content:center;
-  background:#0d0d0d;
-  border-bottom:3px solid var(--primary);
-  z-index:100;
-}
-nav a {
-  padding:1rem 2rem;
-  font-weight:bold;
-  color:var(--text);
-  border-bottom:3px solid transparent;
-  transition:0.3s;
-}
-nav a.active { color:var(--primary); border-bottom:3px solid var(--primary);}
-nav a:hover{color:var(--primary);}
-
-/* ===== Sections ===== */
-section {
-  min-height:100vh;
-  scroll-snap-align:start;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:4rem 2rem;
-  position:relative;
-  overflow:hidden;
-}
-section:nth-of-type(even){background:var(--section-alt);}
-
-/* ===== Fade & Slide Animations ===== */
-.fade-up {
-  opacity: 0;
-  transform: translateY(30px);
-  text-shadow: 0 0 0 rgba(0,0,0,0);
-  animation: fadeUpShadow 0.9s ease-out forwards;
-  animation-play-state: paused;
-}
-h1.fade-up { font-size: 2em; }
-
-@keyframes fadeUpShadow {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    text-shadow: 0 4px 6px rgba(0,0,0,0.35),
-                 0 12px 25px rgba(0,0,0,0.25);
-  }
-}
-.fade-left { opacity:0; transform: translateX(-30px); animation: slideLeft 0.7s forwards; }
-.fade-right { opacity:0; transform: translateX(30px); animation: slideRight 0.7s forwards; }
-@keyframes fadeUp { to { opacity:1; transform: translateY(0); } }
-@keyframes slideLeft { to { opacity:1; transform: translateX(0); } }
-@keyframes slideRight { to { opacity:1; transform: translateX(0); } }
-
-/* ===== Projects Grid ===== */
-.project-grid {
-  display:flex;
-  flex-wrap:wrap;
-  gap:1.5rem;
-  justify-content:center;
-  margin-top:2rem;
-}
-.card {
-  background: var(--card-bg);
-  border-radius:12px;
-  padding:1rem;
-  flex:1 1 250px;
-  cursor:pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-.card img { width:100%; border-radius:8px; margin-bottom:1rem; object-fit:cover; }
-.card:hover { transform: scale(1.05); box-shadow:0 10px 25px rgba(102,0,0,0.7); }
-
-/* ===== About Cards ===== */
-.about-card {
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: 16px;
-  max-width: 800px;
-  width: 100%;
-  box-shadow: 0 6px 18px rgba(102,0,0,0.5);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.about-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(102,0,0,0.7);
-}
-.about-card h2,
-.about-card h3 { margin-bottom: 1rem; color: #ffffff; }
-.about-card ul { list-style: disc inside; text-align: left; }
-.about-card p { text-align: left; line-height: 1.6; }
-
-/* ===== Responsive ===== */
-@media(max-width:768px){ nav { flex-direction: column; } .card { flex:1 1 100%; } }
-
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hudson Miller</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Hudson Miller studies mathematics at Colgate University: algebraic graph theory, reconstruction of de Bruijn graphs, lexsegment ideals, and software for rowing telemetry.">
+<meta property="og:title" content="Hudson Miller">
+<meta property="og:description" content="Mathematics at Colgate University. Graph reconstruction, combinatorial commutative algebra, and software built along the way.">
+<meta property="og:image" content="https://hudsonrmiller.github.io/assets/img/talk.jpg">
+<meta name="theme-color" content="#0f1917">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f1917'/%3E%3Cpath d='M8 23 16 9l8 14' fill='none' stroke='%23edefe7' stroke-width='1.6'/%3E%3Ccircle cx='8' cy='23' r='3' fill='%23edefe7'/%3E%3Ccircle cx='24' cy='23' r='3' fill='%23edefe7'/%3E%3Ccircle cx='16' cy='9' r='3.4' fill='%23e3b23c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
 
-<!-- ===== Navbar ===== -->
-<nav>
-  <a href="#home" class="nav-link active">Home</a>
-  <a href="#about" class="nav-link">About</a>
-  <a href="#projects" class="nav-link">Projects</a>
-</nav>
-
-<!-- ===== Home ===== -->
-<section id="home" style="
-  background: url('assets/colgate_spring.png') no-repeat center center/cover;
-  color:#f5f5f5;
-">
-  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:0;"></div>
-  <div style="position:relative; z-index:1;">
-    <h1 class="fade-up">Hudson Miller</h1>
-    <img src="assets/headshot.png" alt="Hudson Miller" 
-     class="fade-up"
-     style="width:250px; height:250px; border-radius:50%; border:3px solid var(--primary); margin:1rem 0; object-fit:cover;">
-    <h3 class="fade-up">D1 Student-Athlete | Mathematics Researcher | Benton Scholar</h3>
-    <p class="fade-up">Welcome to my portfolio. Scroll down to explore my research and projects.</p>
-  </div>
-</section>
-
-<!-- ===== About ===== -->
-<section id="about" style="
-  padding:4rem 2rem;
-  display:flex;
-  flex-direction:column;
-  gap:2rem;
-  align-items:center;
-  background: url('assets/colgate_autumn.png') no-repeat center center/cover;
-  position:relative;
-  color: #f5f5f5;
-">
-  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:0;"></div>
-  <div style="position:relative; z-index:1; width:100%; display:flex; flex-direction:column; gap:2rem; align-items:center;">
-    <div class="about-card fade-right">
-      <h3>Colgate University</h3>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="#top"><i></i><span>Hudson Miller</span></a>
+    <nav aria-label="Sections">
       <ul>
-        <li>First-year student, expected graduation date May 2029</li>
-        <li>4.0 GPA</li>
-        <li>Benton Scholars Program – $3,000 research grant for Summer 2026</li>
-        <li>Division One Heavyweight Rowing</li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#rowing">Rowing</a></li>
+        <li><a href="#software">Software</a></li>
+        <li class="opt"><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero" aria-label="Introduction">
+  <canvas id="hero-graph" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="mono eyebrow"><span>Mathematics</span><span>·</span><span>Colgate University ’29</span><span>·</span><b>Algebraic graph theory</b></p>
+    <h1><span>Hudson</span><span class="last">Miller</span></h1>
+    <p class="thesis">I study when a graph can be rebuilt from its pieces, and I proved that the undirected de Bruijn graph <em>can</em>.</p>
+    <p class="sub">Undergraduate research fellow in algebraic graph theory and combinatorial commutative algebra. Division I heavyweight rower. I also write the software my team trains with.</p>
+    <div class="cta">
+      <a class="btn solid" href="#research">Read the research</a>
+      <a class="btn" href="#rowing">Rowing telemetry</a>
+      <a class="btn" href="#software">Software</a>
     </div>
-    <div class="about-card fade-left">
-      <h3>Relevant Coursework</h3>
-      <ul>
-        <li>Linear Algebra</li>
-        <li>Computational Statistics in R + lab component</li>
-        <li>Nanophysics</li>
-        <li>Experience with graph theory and abstract algebra</li>
-        <li>14 AP credits including Physics C: Mechanics, Physics C: Electricity and Magnetism, Calculus 2, Statistics, Biology, Research (AP Capstone)</li>
-      </ul>
+  </div>
+  <p class="mono hint">Live: the undirected de Bruijn graph <b>B(3,3)</b><br>27 words, 75 edges · hubs in gold · drag a vertex</p>
+</section>
+
+<section class="facts" aria-label="At a glance">
+  <div class="wrap">
+    <div><strong class="num">4.00</strong><span>Major GPA in mathematics at Colgate</span></div>
+    <div><strong class="num">2</strong><span>Manuscripts in preparation, one sole-authored</span></div>
+    <div><strong>DIMACS</strong><span>Invited speaker, Rutgers Graduate Seminar in Combinatorics, Fall 2026</span></div>
+    <div><strong class="num">20 h</strong><span>A week on the water and the erg, Division I heavyweight crew</span></div>
+  </div>
+</section>
+
+<!-- ================= RESEARCH ================= -->
+<section class="band" id="research">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="mono kicker">Research</span>
+        <h2>Rebuilding graphs from their pieces</h2>
+      </div>
+      <p>Since my first semester I have worked with Professor Sosa-Castillo on a question that links two fields: what does the algebra of reconstructing monomial orders say about the graph reconstruction conjecture? Two manuscripts came out of it. Both figures below are live, and computed in your browser.</p>
     </div>
-    <div class="about-card fade-right">
-      <h3>Research in Graph Theory and Monomial Orders</h3>
-      <p>Paid research internship starting in my first semester at Colgate. Applying principles from reconstructability of algebraic objects to graphs.</p>
+
+    <article class="paper-item">
+      <div class="prose">
+        <span class="mono tag">Manuscript in preparation · sole author</span>
+        <h3>Reconstruction and the Intersection Number of the Undirected de Bruijn Graph</h3>
+        <p>Delete one vertex from a graph and erase every label: that is a <i>card</i>. The <i>deck</i> is the collection of all cards. The oldest open problem in the area asks whether the deck always remembers the graph.</p>
+        <div class="thm"><b>Conjecture (Kelly–Ulam).</b> <i>Every simple graph on at least three vertices is determined, up to isomorphism, by its deck.</i></div>
+        <p>The undirected de Bruijn graph B(k,n) has the k<sup>n</sup> words of length n as vertices, joined when one word shifts into the other. It is far from regular once loops and parallel edges collapse, and that irregularity is what the proof uses. The manuscript gives an explicit algorithm that rebuilds B(k,n) from its deck: identify a hub card, find the unique neighbourhood that fits, then reconstruct. It also studies the minimum edge-clique covers of B(k,n) and its intersection number.</p>
+        <ul class="venues">
+          <li><span>Fall 2026</span><span>Invited speaker, Rutgers DIMACS Graduate Seminar in Combinatorics</span></li>
+          <li><span>Aug 2026</span><span>Presenter, CIMPA School in Combinatorics and Graph Theory, San José, Costa Rica</span></li>
+        </ul>
+      </div>
+
+      <div class="lab" id="deck-lab">
+        <div class="lab-top mono"><span>Deck lab</span><b data-r="name">B(3,3)</b></div>
+        <div class="lab-stage">
+          <canvas aria-label="Interactive drawing of the undirected de Bruijn graph. Click a vertex to delete it and see the resulting card."></canvas>
+        </div>
+        <div class="lab-ctl">
+          <span class="lbl">Alphabet k
+            <span class="seg"><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button><button type="button" data-k="4">4</button></span>
+          </span>
+          <span class="lbl">Length n
+            <span class="seg"><button type="button" data-n="2">2</button><button type="button" data-n="3">3</button><button type="button" data-n="4">4</button></span>
+          </span>
+          <button type="button" class="chip" data-t="hubs" id="deck-hubs">Hub detector</button>
+          <button type="button" class="chip" data-t="cover" id="deck-cover">Clique cover</button>
+          <button type="button" class="chip" data-t="reset" id="deck-reset">Restore vertex</button>
+        </div>
+        <dl class="lab-read">
+          <div><dt>Vertices</dt><dd data-r="v">27</dd></div>
+          <div><dt>Edges</dt><dd data-r="e">75</dd></div>
+          <div><dt>Degree multiset</dt><dd data-r="deg"></dd></div>
+          <div><dt>Hub(C)</dt><dd class="gold" data-r="hub"></dd></div>
+        </dl>
+        <p class="lab-note"></p>
+        <div class="deck" aria-label="The deck: one card per vertex"></div>
+      </div>
+    </article>
+
+    <div class="gallery">
+      <figure>
+        <div class="shot a"><img src="assets/img/talk.jpg" alt="Hudson Miller presenting a slide titled Step 1: identify the hub card" loading="lazy"></div>
+        <figcaption>Step 1 of the reconstruction algorithm: the hub detector, Hub(C) = { w : deg<sub>C</sub>(w) = 2k−2 and C[N<sub>C</sub>(w)] ≅ K<sub>k−1,k−1</sub> }. The lab above runs it.</figcaption>
+      </figure>
+      <figure>
+        <div class="shot b"><img src="assets/img/poster.jpg" alt="Hudson Miller explaining his research poster to a visitor" loading="lazy"></div>
+        <figcaption>Poster session: “Reconstruction and Minimum Edge-Clique Covers of the Undirected de Bruijn Graph.”</figcaption>
+      </figure>
+    </div>
+
+    <article class="paper-item flip" style="margin-top:clamp(72px,9vw,130px)">
+      <div class="prose">
+        <span class="mono tag">Manuscript in preparation · with G. Sosa and K. Santo</span>
+        <h3>Strongly Stable Generators of Lexsegment Ideals</h3>
+        <p>Order the monomials of one degree lexicographically and keep an initial stretch: a <i>lexsegment</i>. Lexsegment ideals are the extremal objects of commutative algebra; Macaulay used them to describe every possible Hilbert function.</p>
+        <p>A lexsegment is always <i>strongly stable</i>: swap any variable for an earlier one and you stay inside. So the whole segment is generated, under those swaps, by a much smaller set of monomials. The manuscript studies those strongly stable generators.</p>
+        <p>The figure shows the degree-d monomials in x, y, z. Each edge of the lattice is one swap. Drag the slider, or click a monomial to end the segment there, and watch which few monomials (gold) generate everything in maroon.</p>
+        <ul class="venues">
+          <li><span>Aug 2026</span><span>Presenter, CIMPA School in Combinatorics and Graph Theory, San José, Costa Rica</span></li>
+        </ul>
+      </div>
+
+      <div class="lab" id="lex-lab">
+        <div class="lab-top mono"><span>Lexsegment explorer</span><b>k[x, y, z], x &gt; y &gt; z</b></div>
+        <div class="lab-stage"><svg role="img" aria-label="Triangle of monomials with the lexsegment and its strongly stable generators highlighted"></svg></div>
+        <div class="lab-ctl">
+          <span class="lbl">Degree
+            <span class="seg"><button type="button" data-d="2">2</button><button type="button" data-d="3">3</button><button type="button" data-d="4">4</button><button type="button" data-d="5">5</button><button type="button" data-d="6">6</button></span>
+          </span>
+          <label for="lex-len">Segment length <input type="range" id="lex-len" min="1" max="15" value="7"></label>
+        </div>
+        <dl class="lab-read">
+          <div><dt>Segment</dt><dd data-r="size"></dd></div>
+          <div><dt>Ends at</dt><dd data-r="last"></dd></div>
+          <div><dt>Generators</dt><dd class="gold" data-r="count"></dd></div>
+          <div><dt>They are</dt><dd class="gold" data-r="gens"></dd></div>
+        </dl>
+      </div>
+    </article>
+
+    <div class="trail">
+      <div>
+        <h3>The path so far</h3>
+        <figure>
+          <div class="shot"><img src="assets/img/costa-rica.jpg" alt="Mountains above the Central Valley of Costa Rica after rain" loading="lazy"></div>
+          <figcaption>The Central Valley, Costa Rica, home of the 2026 CIMPA school</figcaption>
+        </figure>
+      </div>
+      <ol>
+        <li><time>Oct 2025</time><div><b>Undergraduate Research Fellow, Colgate University</b><p>Paid research in algebraic graph theory from my first semester, mentored by Professor Sosa-Castillo. Connecting the reconstruction of monomial orders with the graph reconstruction conjecture.</p></div></li>
+        <li><time>Jun–Aug 2026</time><div><b>Summer Research Fellow</b><p>A faculty-initiated, full-time fellowship. Extended the year's work and took on related problems in algebra.</p></div></li>
+        <li><time>Aug 2026</time><div><b>CIMPA School in Combinatorics and Graph Theory</b><p>San José, Costa Rica. Graph theory, matroids, symmetric functions and polytopes. Presented both projects.</p></div></li>
+        <li><time>Fall 2026</time><div><b>Invited talk, Rutgers DIMACS</b><p>Graduate Seminar in Combinatorics, on reconstructing the undirected de Bruijn graph.</p></div></li>
+        <li><time>2026–</time><div><b>Vice President, Colgate Math Club</b><p>Funding, conference trips, Putnam preparation.</p></div></li>
+      </ol>
     </div>
   </div>
 </section>
 
-<!-- ===== Projects ===== -->
-<section id="projects">
-  <h2 class="fade-up">Projects</h2>
-  <div class="project-grid fade-up">
-    <div class="card fade-left" onclick="window.location.href='projects/adaptive_sampling.html'">
-      <img src="assets/headshot.png" alt="Adaptive Sampling">
-      <h3>Recursive Polynomial Adaptive Sampling</h3>
-      <p>Python-based recursive regression with adaptive sampling.</p>
-    </div>
-    <div class="card fade-right" onclick="window.open('https://github.com/YOUR-GITHUB-PM','_blank')">
-      <img src="assets/img/bike_study.jpeg" alt="Air Quality ML">
-      <h3>Air Quality ML</h3>
-      <p>Matlab models predicting ultra-fine particulate matter.</p>
+<!-- ================= ROWING ================= -->
+<section id="rowing" aria-label="Rowing telemetry">
+  <div class="banner">
+    <img src="assets/img/single.jpg" alt="Hudson Miller rowing a single scull past autumn trees" loading="lazy">
+    <div class="cap"><div class="wrap"><p class="mono">Fall training in the single</p></div></div>
+  </div>
+  <div class="band board" style="padding-top:clamp(28px,4vw,56px)">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="mono kicker">Colgate Rowing Telemetry</span>
+          <h2>Every stroke, measured at the pin</h2>
+        </div>
+        <p>Colgate's eight carries Peach PowerLine sensors on all eight oarlocks. I built the dashboard the team uses to read them: coaches drop in a session, and every rower sees their force curve, catch and finish angles, slip, wash and power, stroke by stroke and across the season.</p>
+      </div>
+
+      <div id="row-lab">
+        <div class="lab-ctl" style="border:0;padding:0 0 18px">
+          <span class="lbl">Stroke rate
+            <span class="seg"><button type="button" data-band="0">&lt;20</button><button type="button" data-band="1">20–24</button><button type="button" data-band="2">24–28</button><button type="button" data-band="3">28–32</button><button type="button" data-band="4">32+</button></span>
+          </span>
+          <span class="lbl">Crew average <b style="color:var(--gold);font-weight:500" data-r="avg"></b> at <b style="color:var(--chalk);font-weight:500" data-r="rate"></b></span>
+        </div>
+        <div class="row-grid">
+          <div class="panel">
+            <div class="lab-top mono"><span>Force curve by seat</span><b>simulated crew</b></div>
+            <div class="lab-stage fill"><canvas id="row-chart" style="cursor:default" aria-label="Force against gate angle for all eight seats"></canvas></div>
+          </div>
+          <div class="panel">
+            <div class="lab-top mono"><span>The eight, from above</span><b>blade glow = force</b></div>
+            <canvas id="row-boat" style="height:230px" aria-label="Animated top-down view of an eight rowing"></canvas>
+            <div class="table-scroll" style="border-top:1px solid var(--chalk-faint)">
+              <table class="seats">
+                <thead><tr><th>Seat</th><th>Catch</th><th>Finish</th><th>Peak kgf</th><th>Slip / wash</th><th>Watts</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <p class="lab-note" style="border:0;padding:16px 0 0">The crew in this figure is simulated, and each number is computed the way the real app computes it. The team's own sessions stay behind the roster login. Click a seat to follow one rower.</p>
+      </div>
+
+      <div class="specs">
+        <div><h4>Power from a pin, not a handle</h4><p>The sensor reads the reaction at the oarlock, not the hands. Taking moments about the blade for a 374&nbsp;cm oar with 114&nbsp;cm inboard gives a lever arm of 0.71&nbsp;m, so work per stroke is ∫&nbsp;F<sub>pin</sub>&nbsp;·&nbsp;0.71&nbsp;dθ.</p></div>
+        <div><h4>A reverse-engineered file format</h4><p>I decoded Peach's undocumented <code>.peach-data</code> binary: one-second frames of 23 channels at 50&nbsp;Hz, 16-bit samples with a flag bit, angles in sixteenths of a degree.</p></div>
+        <div><h4>Built to cost nothing</h4><p>Exports run 24–67&nbsp;MB, so analysis happens in a Web Worker in the coach's browser. Traces are stored as gzipped binary, about 3&nbsp;MB a session. Row-level security makes a cox's note visible only to its rower.</p></div>
+      </div>
+      <div class="links">
+        <a href="https://colgate-rowing.vercel.app" target="_blank" rel="noopener">Live app (team login)</a>
+        <a href="https://hudson-miller.github.io/" target="_blank" rel="noopener">Statistical analysis of team performance, in R</a>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ================= SOFTWARE ================= -->
+<section class="band" id="software">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="mono kicker">Software</span>
+        <h2>Things I built to see if they would work</h2>
+      </div>
+      <p>Numerical methods, an optimizer, a few products with real users. The three demos run the same algorithms as the repositories, rewritten for the browser.</p>
+    </div>
+
+    <article class="feature">
+      <div class="prose">
+        <span class="mono tag">Python · numerical methods</span>
+        <h3>Recursive Polynomial Adaptive Sampling</h3>
+        <p>Fit a curve while looking at as little of the data as possible. Start from ten points, fit a polynomial plus a spline through its residuals, then sample again only where the fit is still wrong. Flat regions are never revisited.</p>
+        <p>Press <b>Run</b>. New samples land in red, exactly where the residual strip is tallest.</p>
+        <div class="links">
+          <a href="https://github.com/hudsonRmiller/Recursive-Polynomial-Adaptive-Sampling" target="_blank" rel="noopener">Code</a>
+          <a href="assets/pdfs/RPAS_Write_Up.pdf" target="_blank" rel="noopener">Write-up (PDF)</a>
+        </div>
+      </div>
+      <div class="lab" id="rpas-lab">
+        <div class="lab-top mono"><span>Adaptive sampling</span><b>260 noisy observations</b></div>
+        <div class="lab-stage"><canvas style="height:360px;cursor:default" aria-label="Adaptive sampling demo"></canvas></div>
+        <div class="lab-ctl">
+          <button type="button" class="chip" data-a="run" id="rpas-run">Run</button>
+          <button type="button" class="chip" data-a="step" id="rpas-step">One pass</button>
+          <button type="button" class="chip" data-a="reset" id="rpas-reset">Reset</button>
+          <span class="lbl">Signal
+            <span class="seg"><button type="button" data-f="0" aria-pressed="true">Burst</button><button type="button" data-f="1" aria-pressed="false">Step</button><button type="button" data-f="2" aria-pressed="false">Peaks</button></span>
+          </span>
+        </div>
+        <dl class="lab-read">
+          <div><dt>Sampled</dt><dd data-r="pts"></dd></div>
+          <div><dt>Of the data</dt><dd data-r="pct"></dd></div>
+          <div><dt>RMSE</dt><dd data-r="rmse"></dd></div>
+          <div><dt>Status</dt><dd data-r="state"></dd></div>
+        </dl>
+      </div>
+    </article>
+
+    <article class="feature flip">
+      <div class="prose">
+        <span class="mono tag">Python · graph theory on point clouds</span>
+        <h3>Denoising with nearest-neighbour graphs</h3>
+        <p>Join every point to its nearest neighbour. The graph falls apart into small components; replace each by its centroid and repeat. Noise averages out within a component while the shape of the data survives between them.</p>
+        <p>It finds the circle, the curve and the branch point. Crossing curves are the known failure case, and the repository keeps that test in.</p>
+        <div class="links"><a href="https://github.com/hudsonRmiller/graph.theory.data.destroyer" target="_blank" rel="noopener">Code</a></div>
+      </div>
+      <div class="lab" id="nn-lab">
+        <div class="lab-top mono"><span>Iterated coarsening</span><b>teal = NN edges</b></div>
+        <div class="lab-stage"><canvas style="height:360px;cursor:default" aria-label="Nearest-neighbour coarsening demo"></canvas></div>
+        <div class="lab-ctl">
+          <button type="button" class="chip" data-a="step" id="nn-step">Coarsen once</button>
+          <button type="button" class="chip" data-a="reset" id="nn-reset">Reset</button>
+          <span class="lbl">Shape
+            <span class="seg"><button type="button" data-set="circle" aria-pressed="true">Circle</button><button type="button" data-set="sine" aria-pressed="false">Sine</button><button type="button" data-set="loop" aria-pressed="false">Loop</button><button type="button" data-set="y" aria-pressed="false">Branch</button></span>
+          </span>
+        </div>
+        <dl class="lab-read">
+          <div><dt>Level</dt><dd data-r="level"></dd></div>
+          <div><dt>Points left</dt><dd class="gold" data-r="pts"></dd></div>
+          <div><dt>Compression</dt><dd data-r="ratio"></dd></div>
+          <div><dt>History</dt><dd data-r="trail"></dd></div>
+        </dl>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="prose">
+        <span class="mono tag">Python · mixed-integer optimization · MIT licensed</span>
+        <h3>RouteRight</h3>
+        <p>How should a trading desk split its monthly flow across venues? Volume tiers reward concentration, because reaching a tier re-prices <i>all</i> your flow. Market impact punishes it, because cost grows faster than size. The first is non-convex, the second convex.</p>
+        <p>RouteRight solves the allocation exactly as a mixed-integer program, with a formal spec and proofs of monotonicity. The figure is the two-venue case with indicative numbers; the engine handles 6–15 venues, token discounts and market-maker programs.</p>
+        <div class="links">
+          <a href="https://github.com/hudsonRmiller/routeright" target="_blank" rel="noopener">Code</a>
+          <a href="https://github.com/hudsonRmiller/routeright/blob/main/MODEL.pdf" target="_blank" rel="noopener">Model spec (PDF)</a>
+        </div>
+      </div>
+      <div class="lab" id="route-lab">
+        <div class="lab-top mono"><span>Monthly cost against the split</span><b>two venues, indicative fees</b></div>
+        <div class="lab-stage"><canvas style="height:360px;cursor:default" aria-label="Total cost against share of flow sent to venue A"></canvas></div>
+        <div class="lab-ctl">
+          <label for="route-v">Monthly flow <input type="range" id="route-v" min="40" max="400" step="10" value="250"> <b style="color:var(--chalk);font-weight:500" data-o="v"></b></label>
+          <label for="route-i">Impact <input type="range" id="route-i" min="0" max="120" step="1" value="50"> <b style="color:var(--chalk);font-weight:500" data-o="i"></b></label>
+        </div>
+        <dl class="lab-read">
+          <div><dt>Best split A / B</dt><dd class="gold" data-r="split"></dd></div>
+          <div><dt>Cost at optimum</dt><dd data-r="cost"></dd></div>
+          <div><dt>All-in</dt><dd data-r="bps"></dd></div>
+          <div><dt>Saved vs 50 / 50</dt><dd class="gold" data-r="save"></dd></div>
+        </dl>
+      </div>
+    </article>
+
+    <div class="cards">
+      <article class="card">
+        <span class="mono">Founder · Astro</span>
+        <h4>AllDorms</h4>
+        <div class="stat num">$11,000+</div>
+        <p>in purchases generated by a move-in guide for new college families. Twelve universities and about 120 pages, all built from one data file.</p>
+        <div class="links"><a href="https://alldorms.net" target="_blank" rel="noopener">alldorms.net</a><a href="https://github.com/hudsonRmiller/alldorms" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="card">
+        <span class="mono">Founder · TIA Incubator</span>
+        <h4>ProjectVerify</h4>
+        <p>Grant-funded early-stage company. An AI interviewer gives the author of a technical project a thesis defense: it reads the work, asks the questions an expert would, and reports whether the author understands what they built.</p>
+      </article>
+      <article class="card">
+        <span class="mono">Next.js · OpenAlex · arXiv</span>
+        <h4>White Space Explorer</h4>
+        <p>Give it a research field. It pulls the citation-ranked literature and recent preprints, maps the paradigms and live debates, and proposes gaps as hypotheses scored for novelty and feasibility.</p>
+        <div class="links"><a href="https://github.com/hudsonRmiller/white-space-explorer" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="card">
+        <span class="mono">React · Stripe</span>
+        <h4>CramKit</h4>
+        <p>Drop in a syllabus or notes and get a study plan and a generated practice exam for finals week. Payments included.</p>
+        <div class="links"><a href="https://github.com/hudsonRmiller/cramkit" target="_blank" rel="noopener">Code</a></div>
+      </article>
+      <article class="card">
+        <span class="mono">R · Quarto</span>
+        <h4>Computational statistics</h4>
+        <p>Labs in simulation, resampling and modelling, plus a full cleaning-to-model analysis of Colgate men's rowing performance data.</p>
+        <div class="links"><a href="https://hudson-miller.github.io/" target="_blank" rel="noopener">Read the labs</a><a href="https://github.com/hudsonRmiller/finalcalc" target="_blank" rel="noopener">Also: FinalCalc</a></div>
+      </article>
+      <article class="card">
+        <span class="mono">For fun · TypeScript · three.js</span>
+        <h4>TireTap</h4>
+        <div class="shot"><img src="assets/img/tiretap.jpg" alt="TireTap title art: a mountain biker mid-air above pine trees" loading="lazy"></div>
+        <p>A mountain bike game for your phone, with its own bike physics, hand-built jump trails and a slopestyle course. A side project that got out of hand.</p>
+        <div class="links"><a href="https://tiretap.racing" target="_blank" rel="noopener">Play it</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="band paper-2" id="about">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="mono kicker">About</span>
+        <h2>Hamilton, New York</h2>
+      </div>
+      <p>A sophomore at a liberal arts college of three thousand students, on a hill above a village, with a lake at the bottom of it.</p>
+    </div>
+    <div class="about">
+      <div class="prose">
+        <p>I am a mathematics major at Colgate University, class of 2029, from outside Philadelphia. I started research in my first semester and have not stopped: combinatorics is where I want to spend graduate school and the years after it.</p>
+        <p>Mornings are on the water with the heavyweight crew. Rowing is the other place I have learned that progress comes from small corrections repeated thousands of times, and it is why half the software on this page measures something.</p>
+        <dl class="ledger">
+          <div><dt>Degree</dt><dd>B.A. Mathematics, Colgate University, expected May 2029. Major GPA 4.00.</dd></div>
+          <div><dt>Coursework</dt><dd>Number Theory, Probability, Computational Statistics, Linear Algebra, Calculus III.</dd></div>
+          <div><dt>Spring 2027</dt><dd>Abstract Algebra, Topology, Mathematical Statistics, Intro to Computing II.</dd></div>
+          <div><dt>Honors</dt><dd>AMS Scholar ($10,000). Benton Scholar ($3,000). Phi Eta Sigma.</dd></div>
+          <div><dt>Service</dt><dd>Vice President, Colgate Math Club.</dd></div>
+          <div><dt>Before Colgate</dt><dd>Conestoga High School, Berwyn, PA. 4.00 unweighted. ACT 36, SAT 1560, thirteen AP exams at 4 or 5.</dd></div>
+          <div><dt>Tools</dt><dd>Python, R, C, LaTeX, ArcGIS.</dd></div>
+        </dl>
+      </div>
+      <div class="mosaic">
+        <figure><div class="shot"><img src="assets/img/colgate-aerial.jpg" alt="Aerial view of the Colgate University campus and Taylor Lake" loading="lazy"></div></figure>
+        <figure><div class="shot"><img src="assets/img/chalk.jpg" alt="Hudson Miller at a chalkboard covered in reaction mechanisms" loading="lazy"></div><figcaption>At the board. Not everything is graph theory.</figcaption></figure>
+        <figure><div class="shot"><img src="assets/img/taylor-lake.jpg" alt="Colgate University across Taylor Lake" loading="lazy"></div><figcaption>Taylor Lake</figcaption></figure>
+        <figure><div class="shot"><img src="assets/img/chapel.jpg" alt="Memorial Chapel at Colgate University" loading="lazy"></div></figure>
+        <figure><div class="shot"><img src="assets/img/colgate-autumn.jpg" alt="The Colgate campus in autumn reflected in the lake" loading="lazy"></div></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= CONTACT ================= -->
+<footer class="band board contact" id="contact">
+  <div class="wrap">
+    <span class="mono" style="color:var(--gold);display:block;margin-bottom:22px">Contact</span>
+    <h2>Talk math <a href="mailto:hrmiller@colgate.edu">with me.</a></h2>
+    <div class="row">
+      <span class="addr">hrmiller@colgate.edu</span>
+      <button type="button" class="btn" id="copy-email">Copy address</button>
+      <a class="btn" href="https://github.com/hudsonRmiller" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://github.com/Hudson-Miller" target="_blank" rel="noopener">GitHub (coursework)</a>
+    </div>
+    <div class="credits">
+      <p>© 2026 Hudson Miller. Every figure on this page is computed live in your browser; no data leaves it.</p>
+      <p>Photographs of Hudson are his own. Campus aerial and Memorial Chapel: Colgate University, CC BY-SA 4.0. Taylor Lake: Balon Greyjoy, CC0. Central Valley of Costa Rica: O'Dea, CC BY-SA 4.0. All via <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>. Set in Bricolage Grotesque, STIX Two and JetBrains Mono.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/math.js"></script>
+<script src="assets/js/figures.js"></script>
+<script src="assets/js/rowing.js"></script>
+<script src="assets/js/labs.js"></script>
 <script>
-// ===== Highlight active nav link =====
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".nav-link");
-window.addEventListener("scroll", () => {
-  let current = "";
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 120;
-    if(scrollY >= sectionTop) current = section.getAttribute("id");
+(function () {
+  // copy the address
+  var b = document.getElementById('copy-email');
+  b.addEventListener('click', function () {
+    var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy address'; }, 1600); };
+    try { navigator.clipboard.writeText('hrmiller@colgate.edu').then(done, function () { getSelection().selectAllChildren(document.querySelector('.addr')); }); }
+    catch (e) { getSelection().selectAllChildren(document.querySelector('.addr')); }
   });
-  navLinks.forEach(link => link.classList.remove("active"));
-  if(current) document.querySelector(`nav a[href="#${current}"]`)?.classList.add("active");
-});
-
-// ===== Fade in elements sequentially =====
-const fadeEls = document.querySelectorAll('.fade-up, .fade-left, .fade-right');
-window.addEventListener('load', () => {
-  fadeEls.forEach((el, i) => {
-    setTimeout(()=>el.style.animationPlayState='running', i*150);
-  });
-});
+  // highlight the current section in the nav
+  var links = [].slice.call(document.querySelectorAll('.nav li a'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); }); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['research', 'rowing', 'software', 'about', 'contact'].forEach(function (id) { io.observe(document.getElementById(id)); });
+    // gentle reveal, only for things still below the fold
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var rv = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('pre'); rv.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+      [].forEach.call(document.querySelectorAll('.head, .paper-item, .gallery figure, .trail, .row-grid, .specs, .feature, .card, .about, .contact h2'), function (el) {
+        if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('rev', 'pre'); rv.observe(el); }
+      });
+    }
+  }
+})();
 </script>
-
 </body>
 </html>
