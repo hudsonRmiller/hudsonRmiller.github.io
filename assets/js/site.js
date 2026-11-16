@@ -85,66 +85,78 @@
     return { words: words, edges: edges, idx: idx, hub: words.map(function (w) { return w[0] === w[1]; }) };
   }
 
-  // hero: a slowly turning B-hat(4,3) with light travelling along its edges
-  var hg = document.getElementById('hero-graph');
-  if (hg) (function () {
-    var G = dbg(4);
-    animate(hg, function (t) {
-      var c = fit(hg), ctx = c.ctx, w = c.w, h = c.h, n = G.words.length;
-      var cx = w > 820 ? w * 0.53 : w * 0.5, cy = h * 0.45, R = Math.min(h * 0.37, w * 0.3), rot = still ? 0.3 : t / 26000;
+  // a slowly turning B-hat(4,3) with light travelling along its edges (hero banner and the de Bruijn page)
+  [].forEach.call(document.querySelectorAll('.dbg-spin'), function (cv) {
+    var G = dbg(4), hero = cv.hasAttribute('data-hero');
+    animate(cv, function (t) {
+      var c = fit(cv), ctx = c.ctx, w = c.w, h = c.h, n = G.words.length, narrow = w < 700, cx, cy, R, fade = 1;
+      if (!hero) { cx = w / 2; cy = h / 2; R = Math.min(w, h) * 0.38; }
+      else if (narrow) { cx = w * 0.72; cy = h * 0.24; R = w * 0.4; fade = 0.55; }
+      else { cx = w * 0.6; cy = h * 0.42; R = Math.min(h * 0.28, w * 0.135); }
+      var rot = still ? 0.3 : t / 26000;
       var P = G.words.map(function (_, i) { var a = rot + i / n * 6.2832; return [cx + Math.cos(a) * R, cy + Math.sin(a) * R * 0.92]; });
       ctx.lineWidth = 1; ctx.strokeStyle = INK;
       G.edges.forEach(function (e, i) {
         var pulse = still ? 0 : Math.max(0, Math.sin(t / 1400 + i * 0.83)); pulse = pulse * pulse * pulse;
-        ctx.globalAlpha = 0.13 + 0.42 * pulse; ctx.beginPath(); ctx.moveTo(P[e[0]][0], P[e[0]][1]); ctx.lineTo(P[e[1]][0], P[e[1]][1]); ctx.stroke();
+        ctx.globalAlpha = (0.13 + 0.42 * pulse) * fade; ctx.beginPath(); ctx.moveTo(P[e[0]][0], P[e[0]][1]); ctx.lineTo(P[e[1]][0], P[e[1]][1]); ctx.stroke();
       });
       ctx.font = '12px "IBM Plex Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       P.forEach(function (p, i) {
-        ctx.globalAlpha = 0.9; ctx.fillStyle = G.hub[i] ? ACCENT : INK; ctx.beginPath(); ctx.arc(p[0], p[1], G.hub[i] ? 5 : 3.5, 0, 6.2832); ctx.fill();
-        var a = rot + i / n * 6.2832; ctx.globalAlpha = 0.55; ctx.fillStyle = INK; ctx.fillText(G.words[i], cx + Math.cos(a) * (R + 22), cy + Math.sin(a) * (R * 0.92 + 20));
+        ctx.globalAlpha = 0.9 * fade; ctx.fillStyle = G.hub[i] ? ACCENT : INK; ctx.beginPath(); ctx.arc(p[0], p[1], G.hub[i] ? 5 : 3.5, 0, 6.2832); ctx.fill();
+        var a = rot + i / n * 6.2832; ctx.globalAlpha = 0.55 * fade; ctx.fillStyle = INK; ctx.fillText(G.words[i], cx + Math.cos(a) * (R + 22), cy + Math.sin(a) * (R * 0.92 + 20));
       });
       ctx.globalAlpha = 1;
     });
-  })();
+  });
 
-  // the reconstruction algorithm on B-hat(3,3): delete a hub, find its K_{k-1,k-1}, rejoin
-  [].forEach.call(document.querySelectorAll('.recon'), function (box) {
-    var cv = box.querySelector('canvas'), label = box.querySelector('[data-step]');
-    var G = dbg(3, ['00', '01', '02', '12', '11', '21', '22', '20', '10']);
-    var hub = 0, nb = [1, 2, 7, 8], sideA = { 1: 1, 2: 1 };
-    var isNb = function (i) { return nb.indexOf(i) >= 0; };
-    var STEPS = ['', 'Step 1: identify the hub card', 'Step 2: find the neighborhood of the deleted hub', 'Step 3: reconstruct the graph'];
-    var DUR = 2600;
-    animate(cv, function (t) {
-      var tt = still ? DUR * 3.9 : t % (DUR * 4.6), ph = Math.min(3, Math.floor(tt / DUR)), u = ease((tt - ph * DUR) / 900);
-      var c = fit(cv), ctx = c.ctx, w = c.w, h = c.h, n = 9, cx = w / 2, cy = h / 2 + (label ? 10 : 0), R = Math.min(w * 0.36, h * 0.36);
-      var P = G.words.map(function (_, i) { var a = Math.PI + i / n * 6.2832; return [cx + Math.cos(a) * R * 1.25, cy + Math.sin(a) * R]; });
-      var gone = ph === 0 ? 0 : ph === 1 ? u : ph === 2 ? 1 : 1 - u;   // how deleted the hub is
-      var lit = ph === 2 ? u : ph === 3 ? 1 : 0;                         // neighbourhood highlight
-      ctx.lineCap = 'round';
-      G.edges.forEach(function (e) {
-        var a = e[0], b = e[1], touchesHub = a === hub || b === hub, inK = isNb(a) && isNb(b);
-        if (touchesHub) {
-          var p0 = P[hub], p1 = P[a === hub ? b : a];
-          if (ph === 3) { ctx.strokeStyle = ACCENT; ctx.globalAlpha = 1; ctx.lineWidth = 1.8; ctx.setLineDash(u < 1 ? [5, 5] : []); ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p0[0] + (p1[0] - p0[0]) * u, p0[1] + (p1[1] - p0[1]) * u); ctx.stroke(); ctx.setLineDash([]); }
-          else { ctx.strokeStyle = INK; ctx.globalAlpha = 0.4 * (1 - gone); ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke(); }
-          return;
-        }
-        ctx.strokeStyle = inK && lit ? ACCENT : INK; ctx.globalAlpha = inK ? 0.4 + 0.6 * lit : 0.4 - 0.22 * lit; ctx.lineWidth = inK ? 1.1 + lit : 1.1;
-        ctx.beginPath(); ctx.moveTo(P[a][0], P[a][1]); ctx.lineTo(P[b][0], P[b][1]); ctx.stroke();
+  // reconstruction: each vertex of G is deleted in turn and the card G - v joins the deck D(G)
+  [].forEach.call(document.querySelectorAll('.deck-anim'), function (box) {
+    var cv = box.querySelector('canvas');
+    var V = [[-0.9, 0.15], [-0.35, -0.75], [0.45, -0.7], [0.95, 0.05], [0.4, 0.8], [-0.35, 0.65]];
+    var E = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0], [1, 5], [2, 4], [1, 4]];
+    var n = V.length, PER = 1500, HOLD = 2600, total = n * PER + HOLD;
+    function graph(ctx, ox, oy, s, skip, alpha, hot, hotAmt) {
+      ctx.lineWidth = 1.2; ctx.strokeStyle = INK;
+      E.forEach(function (e) {
+        if (e[0] === skip || e[1] === skip) return;
+        var touches = e[0] === hot || e[1] === hot;
+        ctx.globalAlpha = alpha * (touches ? 0.55 * (1 - hotAmt) : 0.55);
+        ctx.beginPath(); ctx.moveTo(ox + V[e[0]][0] * s, oy + V[e[0]][1] * s); ctx.lineTo(ox + V[e[1]][0] * s, oy + V[e[1]][1] * s); ctx.stroke();
       });
-      ctx.font = '12px "IBM Plex Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      P.forEach(function (p, i) {
-        var a = Math.PI + i / n * 6.2832, alpha = i === hub ? 1 - gone : 1, r = 4.5;
-        if (i === hub && ph === 3) alpha = u;
-        ctx.globalAlpha = alpha;
-        if (isNb(i) && lit) { ctx.strokeStyle = ACCENT; ctx.lineWidth = 1.5; ctx.globalAlpha = lit; ctx.beginPath(); ctx.arc(p[0], p[1], 10, 0, 6.2832); ctx.stroke(); ctx.globalAlpha = 1; }
-        ctx.fillStyle = (i === hub && ph === 3) || G.hub[i] ? ACCENT : INK; ctx.beginPath(); ctx.arc(p[0], p[1], G.hub[i] ? 5.5 : r, 0, 6.2832); ctx.fill();
-        ctx.fillStyle = FAINT; ctx.globalAlpha = alpha * 0.95;
-        ctx.fillText(i === hub && ph === 3 ? 'x' : G.words[i], cx + Math.cos(a) * (R * 1.25 + 22), cy + Math.sin(a) * (R + 18));
+      V.forEach(function (v, i) {
+        if (i === skip) return;
+        var isHot = i === hot && hotAmt > 0;
+        ctx.globalAlpha = alpha * (isHot ? 1 - hotAmt * 0.85 : 1);
+        ctx.fillStyle = isHot ? ACCENT : INK; ctx.beginPath(); ctx.arc(ox + v[0] * s, oy + v[1] * s, Math.max(2.4, s * 0.075) + (isHot ? 3 * hotAmt : 0), 0, 6.2832); ctx.fill();
       });
       ctx.globalAlpha = 1;
-      if (label) label.textContent = STEPS[ph];
+    }
+    animate(cv, function (t) {
+      var c = fit(cv), ctx = c.ctx, w = c.w, h = c.h, narrow = w < 560;
+      var tt = still ? total - 1 : t % total, cur = Math.min(n, Math.floor(tt / PER)), lt = tt - cur * PER;
+      var endFade = tt > n * PER + HOLD - 500 ? 1 - (tt - (n * PER + HOLD - 500)) / 500 : 1;
+      // layout: G on the left (or top), a 3 x 2 grid of cards on the right (or bottom)
+      var gx, gy, gs, cards = [], cw, ch;
+      if (narrow) { gx = w / 2; gy = h * 0.22; gs = Math.min(w * 0.3, h * 0.15); var top = h * 0.46; cw = (w - 40) / 3; ch = (h - top - 28) / 2; for (var i = 0; i < n; i++) cards.push([20 + (i % 3) * cw, top + Math.floor(i / 3) * ch]); }
+      else { gx = w * 0.22; gy = h * 0.5; gs = Math.min(w * 0.14, h * 0.32); var left = w * 0.44; cw = (w - left - 24) / 3; ch = (h - 40) / 2; for (var j = 0; j < n; j++) cards.push([left + (j % 3) * cw, 20 + Math.floor(j / 3) * ch]); }
+      ctx.font = '15px ' + SANS; ctx.fillStyle = FAINT; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText('G', gx, narrow ? 8 : gy - gs - 34);
+      var hot = cur < n ? cur : -1, hotAmt = cur < n ? ease(lt / 500) * (1 - ease((lt - 900) / 400)) : 0;
+      graph(ctx, gx, gy, gs, -1, endFade, hot, hotAmt);
+      var cs = Math.min(cw, ch) * 0.3;
+      for (var k = 0; k < n; k++) {
+        var x = cards[k][0], y = cards[k][1], pad = 6;
+        ctx.strokeStyle = LINE; ctx.lineWidth = 1; ctx.globalAlpha = endFade;
+        ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x + pad, y + pad, cw - 2 * pad, ch - 2 * pad, 8); else ctx.rect(x + pad, y + pad, cw - 2 * pad, ch - 2 * pad); ctx.stroke();
+        var shown = k < cur ? 1 : k === cur ? ease((lt - 500) / 700) : 0;
+        if (shown <= 0) continue;
+        // the card travels from G to its slot as it appears
+        var tx = x + cw / 2, ty = y + ch / 2, px = gx + (tx - gx) * shown, py = gy + (ty - gy) * shown, ps = gs + (cs - gs) * shown;
+        graph(ctx, px, py, ps, k, endFade * (k === cur ? 0.35 + 0.65 * shown : 1), -1, 0);
+      }
+      ctx.globalAlpha = endFade; ctx.font = '15px ' + SANS; ctx.fillStyle = FAINT; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+      ctx.fillText('D(G)', cards[0][0] + 8, narrow ? cards[0][1] - 22 : 0);
+      ctx.globalAlpha = 1;
     });
   });
 

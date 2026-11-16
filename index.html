@@ -15,14 +15,14 @@
 <header class="nav">
   <div class="wrap">
     <a class="name" href="index.html">Hudson Miller</a>
-    <nav aria-label="Main"><ul><li><a href="index.html" aria-current="page">About</a></li><li><a href="research.html">Research and Projects</a></li><li><a href="academics.html">Academics</a></li><li><a class="pill" href="mailto:hrmiller@colgate.edu">Email</a></li></ul></nav>
+    <nav aria-label="Main"><ul><li><a href="index.html" aria-current="page">About</a></li><li><a href="research.html">Research<span class="long-only"> and Projects</span></a></li><li><a href="academics.html">Academics</a></li><li><a class="pill" href="mailto:hrmiller@colgate.edu">Email</a></li></ul></nav>
   </div>
 </header>
 <main>
 
 <section class="hero board">
   <img src="assets/img/board.jpg" alt="Hudson Miller at a chalkboard">
-  <canvas id="hero-graph" aria-hidden="true"></canvas>
+  <canvas class="dbg-spin" data-hero aria-hidden="true"></canvas>
   <div class="wrap">
     <h1 class="rise">Hudson Miller</h1>
     <p class="lede rise d1">Research portfolio. Mathematics, Colgate University.</p>
@@ -43,7 +43,7 @@
     <h2 style="margin-bottom:clamp(28px,4vw,48px)">Research and Projects</h2>
     <div class="widgets">
       <a class="widget wide" href="debruijn.html">
-        <div class="wstage recon"><canvas aria-hidden="true"></canvas></div>
+        <div class="wstage deck-anim"><canvas aria-hidden="true"></canvas></div>
         <h3>Reconstruction and the Intersection Number of the Undirected de Bruijn Graph</h3>
       </a>
       <a class="widget" href="rpas.html">

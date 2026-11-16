@@ -6,7 +6,7 @@ BH = 'B&#x0302;'  # B with a hat
 
 
 def page(fn, title, cur, body, desc):
-    nav = ''.join(f'<li><a href="{h}"{" aria-current=\"page\"" if h == cur else ""}>{t}</a></li>' for h, t in [('index.html', 'About'), ('research.html', 'Research and Projects'), ('academics.html', 'Academics')])
+    nav = ''.join(f'<li><a href="{h}"{" aria-current=\"page\"" if h == cur else ""}>{t}</a></li>' for h, t in [('index.html', 'About'), ('research.html', 'Research<span class="long-only"> and Projects</span>'), ('academics.html', 'Academics')])
     html = f'''<!doctype html>
 <html lang="en">
 <head>
@@ -60,7 +60,7 @@ RPAS_INTRO = 'This model optimizes curve-fitting by combining polynomial fitting
 page('index.html', 'Hudson Miller · Research Portfolio', 'index.html', f'''
 <section class="hero board">
   <img src="assets/img/board.jpg" alt="Hudson Miller at a chalkboard">
-  <canvas id="hero-graph" aria-hidden="true"></canvas>
+  <canvas class="dbg-spin" data-hero aria-hidden="true"></canvas>
   <div class="wrap">
     <h1 class="rise">Hudson Miller</h1>
     <p class="lede rise d1">Research portfolio. Mathematics, Colgate University.</p>
@@ -81,7 +81,7 @@ page('index.html', 'Hudson Miller · Research Portfolio', 'index.html', f'''
     <h2 style="margin-bottom:clamp(28px,4vw,48px)">Research and Projects</h2>
     <div class="widgets">
       <a class="widget wide" href="debruijn.html">
-        <div class="wstage recon"><canvas aria-hidden="true"></canvas></div>
+        <div class="wstage deck-anim"><canvas aria-hidden="true"></canvas></div>
         <h3>Reconstruction and the Intersection Number of the Undirected de Bruijn Graph</h3>
       </a>
       <a class="widget" href="rpas.html">
@@ -184,9 +184,8 @@ page('research.html', 'Research and Projects · Hudson Miller', 'research.html',
           <p class="links"><a href="debruijn.html">Read more</a></p>
         </div>
       </div>
-      <div class="stage recon">
-        <span class="note" data-step></span>
-        <canvas style="height:clamp(320px,40vw,500px)" role="img" aria-label="The reconstruction algorithm: a hub is deleted, its neighborhood is found, and the graph is rebuilt"></canvas>
+      <div class="stage deck-anim">
+        <canvas style="height:clamp(380px,40vw,500px)" role="img" aria-label="A graph G and its deck: each vertex is deleted in turn, and each card joins the deck"></canvas>
       </div>
       <div class="rows" style="margin-top:24px">
         <div class="row"><h3>Invited Speaker, Rutgers DIMACS Graduate Seminar in Combinatorics</h3><span class="when">Fall 2026</span></div>
@@ -320,22 +319,14 @@ page('debruijn.html', 'Reconstruction of the Undirected de Bruijn Graph · Hudso
 
 <section class="block">
   <div class="wrap split">
-    <h2>Cards and decks</h2>
-    <div class="duo">
-      <div class="prose">
-        <p>For a graph G:</p>
-        <p><b>A card.</b> G with one vertex deleted.</p>
-        <p><b>The deck.</b> The vertex-deletion deck of G, D(G), is the multiset of all cards.</p>
-      </div>
-      <svg class="fig" viewBox="0 0 600 300" role="img" aria-label="A graph with one vertex deleted at a time"></svg>
-    </div>
-  </div>
-</section>
-
-<section class="block">
-  <div class="wrap split">
-    <h2>The Kelly–Ulam Reconstruction Conjecture</h2>
+    <h2>Reconstruction</h2>
     <div class="prose">
+      <p>For a graph G:</p>
+      <p><b>A card.</b> G with one vertex deleted.</p>
+      <p><b>The deck.</b> The vertex-deletion deck of G, D(G), is the multiset of all cards.</p>
+      <div class="stage deck-anim" style="margin:28px 0">
+        <canvas style="height:clamp(420px,34vw,440px)" role="img" aria-label="A graph G and its deck: each vertex is deleted in turn, and each card joins the deck"></canvas>
+      </div>
       <div class="thm lead"><b>The Kelly–Ulam Conjecture.</b> Every finite simple graph on ≥ 3 vertices is determined up to isomorphism by its vertex-deletion deck.</div>
       <p>Equivalently: D(G′) ≅ D(G) ⇒ G′ ≅ G.</p>
       <p>Proven for many families: trees, regular graphs, disconnected graphs, maximal planar graphs, and others.</p>
@@ -346,7 +337,7 @@ page('debruijn.html', 'Reconstruction of the Undirected de Bruijn Graph · Hudso
 
 <section class="block">
   <div class="wrap split">
-    <h2>What is a de Bruijn sequence?</h2>
+    <h2>De Bruijn sequences</h2>
     <div class="duo">
       <div class="prose">
         <p>Fix a k-alphabet Σ<sub>k</sub> = {{0, 1, …, k − 1}} and a length n.</p>
@@ -365,83 +356,27 @@ page('debruijn.html', 'Reconstruction of the Undirected de Bruijn Graph · Hudso
   <div class="wrap split">
     <h2>The undirected de Bruijn graph, {BH}(k, n)</h2>
     <div class="duo">
-    <div class="prose">
-      <p><b>Vertices:</b> all words of length n − 1 (|V| = k<sup>n−1</sup>).</p>
-      <p><b>Edges:</b> there is a directed edge u → v if suf(u) = pre(v).</p>
-      <p>To “undirect” B(k, n):</p>
-      <ol><li>Remove the orientation of all edges.</li><li>Delete loops.</li><li>Collapse all parallel edges.</li></ol>
-      <p><b>Adjacency in {BH}(k, n).</b> For u ≠ v: u ∼ v if and only if suf(u) = pre(v) or suf(v) = pre(u).</p>
-    </div>
-    <canvas id="hero-graph" style="width:100%;height:380px" role="img" aria-label="The undirected de Bruijn graph on two-letter words over four symbols"></canvas>
+      <div class="prose">
+        <p><b>De Bruijn graph B(k, n).</b> Vertices: all words of length n − 1 (|V| = k<sup>n−1</sup>). Edges: there is a directed edge u → v if suf(u) = pre(v).</p>
+        <p>To “undirect” B(k, n):</p>
+        <ol><li>Remove the orientation of all edges.</li><li>Delete loops.</li><li>Collapse all parallel edges.</li></ol>
+        <p><b>Adjacency in {BH}(k, n).</b> For u ≠ v: u ∼ v if and only if suf(u) = pre(v) or suf(v) = pre(u).</p>
+      </div>
+      <canvas class="dbg-spin" style="width:100%;height:380px" role="img" aria-label="The undirected de Bruijn graph on two-letter words over four symbols"></canvas>
     </div>
   </div>
 </section>
 
 <section class="block">
   <div class="wrap split">
-    <h2>Main result 1</h2>
+    <h2>Results</h2>
     <div class="prose">
       <div class="thm lead"><b>Theorem 1 (Reconstruction).</b> For all k, n ≥ 2, the undirected de Bruijn graph {BH}(k, n) on ≥ 3 vertices is reconstructible.</div>
-      <p><b>Definition (Hub vertex).</b> For each a ∈ Σ<sub>k</sub>, the hub a = a<sup>n−1</sup> is the constant word aaa…. The k hubs form an independent set.</p>
-      <p><b>Degrees (for n ≥ 4):</b> hubs have degree 2k − 2, period-two vertices have degree 2k − 1, all other vertices have degree 2k. The minimum degree δ = 2k − 2 is achieved exactly on the k hubs.</p>
-      <div class="stage recon" style="margin:28px 0">
-        <span class="note" data-step></span>
-        <canvas style="height:clamp(320px,38vw,460px)" role="img" aria-label="The reconstruction algorithm: a hub is deleted, its neighborhood is found, and the graph is rebuilt"></canvas>
-      </div>
-      <div class="rows">
-        <div class="row"><h3>Step 1: identify the hub card</h3><span class="when"></span>
-          <p class="what">C is a hub-deletion card ⇔ δ(C) = 2k − 2 and |Hub(C)| = k − 1.</p></div>
-        <div class="row"><h3>Step 2: find the neighborhood of the deleted hub</h3><span class="when"></span>
-          <p class="what">In a hub card C = G − a, the set N<sub>G</sub>(a) is the unique size-(2k − 2) subset of {{v : deg<sub>C</sub>(v) = 2k − 1}} inducing K<sub>k−1,k−1</sub>.</p></div>
-        <div class="row"><h3>Step 3: reconstruct the graph</h3><span class="when"></span>
-          <p class="what">Joining x to the induced K<sub>k−1,k−1</sub> yields {BH}(k, n). We reconstruct the graph from one card.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="block">
-  <div class="wrap split">
-    <h2>Recap</h2>
-    <div class="table-scroll">
-      <table class="recap">
-        <thead><tr><th>Parameters</th><th>Reconstruction mechanism</th><th>Result</th></tr></thead>
-        <tbody>
-          <tr><td>n = 2, k ≥ 3</td><td>{BH}(k, 2) = K<sub>k</sub> is regular</td><td>reconstructible</td></tr>
-          <tr><td>k ≥ 3, n ≥ 3</td><td>hub card and neighbor subdeck</td><td>reconstructible</td></tr>
-          <tr><td>k = 2, n = 3</td><td>degree multiset</td><td>reconstructible</td></tr>
-          <tr><td>k = 2, n ≥ 4</td><td>hub card and short-cycle counts</td><td>reconstructible</td></tr>
-          <tr><td>(k, n) = (2, 2)</td><td>K<sub>2</sub> and 2K<sub>1</sub> share a deck</td><td>not reconstructible</td></tr>
-        </tbody>
-      </table>
-      <p style="color:var(--muted);margin-top:18px">In all cases, a single recognizable card is all we need.</p>
-    </div>
-  </div>
-</section>
-
-<section class="block">
-  <div class="wrap split">
-    <h2>Main result 2</h2>
-    <div class="prose">
-      <p><b>Intersection number i(G)</b> (Erdős–Goodman–Pósa, 1966). The smallest number of cliques needed to cover every edge of G. Computing i(G) is NP-hard in general (Kou–Stockmeyer–Wong, 1978).</p>
+      <p style="margin-top:36px"><b>Intersection number i(G)</b> (Erdős–Goodman–Pósa, 1966). The smallest number of cliques needed to cover every edge of G. Computing i(G) is NP-hard in general (Kou–Stockmeyer–Wong, 1978).</p>
       <div class="thm lead"><b>Theorem 2 (Intersection Number).</b> For k ≥ 3, n ≥ 4, the intersection number of the undirected de Bruijn graph {BH}(k, n) is
         <span class="eq">i({BH}(k, n)) = k<sup>n</sup> − k(k + 1)/2 − ⅔ k(k − 1)(k + 4).</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="block">
-  <div class="wrap split">
-    <h2>Takeaways</h2>
-    <div>
-      <ul class="plain">
-        <li>{BH}(k, n) is reconstructible for all k, n ≥ 2 except (2, 2).</li>
-        <li>On the way we characterized the degree structure and hub geometry of {BH}(k, n).</li>
-        <li>The algorithm identifies one hub card and then uses only that card to rebuild the graph.</li>
-        <li>The same local structure allows us to derive the intersection number i({BH}(k, n)) in closed form.</li>
-      </ul>
       <div class="photos">
-        <div class="photo"><img src="assets/img/talk.jpg" alt="Hudson Miller presenting the reconstruction algorithm" loading="lazy"></div>
+        <div class="photo"><img src="assets/img/talk.jpg" alt="Hudson Miller presenting at the Rutgers Graduate Seminar in Combinatorics" loading="lazy"></div>
         <div class="photo tall"><img src="assets/img/poster.jpg" alt="Hudson Miller presenting his poster" loading="lazy"></div>
       </div>
       <p class="links" style="margin-top:28px"><a href="research.html#debruijn">← Research and Projects</a></p>
