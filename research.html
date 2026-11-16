@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Research and Projects · Hudson Miller</title>
-<meta name="description" content="Research by Hudson Miller in algebraic graph theory.">
+<meta name="description" content="Research and projects by Hudson Miller.">
 <meta name="theme-color" content="#0a100e">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
@@ -23,59 +23,62 @@
 <section class="top"><div class="wrap"><h1 class="rise">Research and Projects</h1></div></section>
 
 <section class="block">
-  <div class="wrap split">
-    <h2>Manuscripts and Presentations</h2>
-    <div>
-      <div class="duo" id="debruijn">
-        <p class="cite">Miller, H. “Reconstruction and the Intersection Number of the Undirected de Bruijn Graph.”<small>Manuscript in preparation for submission.</small></p>
-        <svg class="fig" viewBox="0 0 600 300" role="img" aria-label="The undirected de Bruijn graph on binary words of length three"></svg>
-      </div>
-      <!-- YOUR TEXT: abstract or description of this paper -->
-      <div class="rows" style="margin-top:28px">
-        <div class="row"><h3>Invited Speaker, Rutgers DIMACS Graduate Seminar in Combinatorics</h3><span class="when">Fall 2026</span></div>
-        <div class="row"><h3>Presenter, CIMPA Summer School in Combinatorics and Graph Theory, Costa Rica</h3><span class="when">Summer 2026</span></div>
-      </div>
-
-      <div class="duo" id="lexsegment" style="margin-top:clamp(48px,6vw,80px)">
-        <p class="cite">Sosa, G.; Miller, H.; and Santo, K. “Strongly Stable Generators of Lexsegment Ideals.”<small>Manuscript in preparation for submission.</small></p>
-        <svg class="lex" viewBox="0 0 400 300" role="img" aria-label="Monomials of degree four in three variables, with a growing lexsegment and its strongly stable generators"></svg>
-      </div>
-      <!-- YOUR TEXT: abstract or description of this paper -->
-      <div class="rows" style="margin-top:28px">
-        <div class="row"><h3>Presenter, CIMPA Summer School in Combinatorics and Graph Theory, Costa Rica</h3><span class="when">Summer 2026</span></div>
-      </div>
-
-      <div class="photos">
-        <div class="photo"><img src="assets/img/talk.jpg" alt="Hudson Miller presenting the reconstruction algorithm" loading="lazy"></div>
-        <div class="photo tall"><img src="assets/img/poster.jpg" alt="Hudson Miller presenting his poster" loading="lazy"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="p-rpas">
-  <div class="wrap split">
-    <h2>Recursive Polynomial Adaptive Sampling</h2>
-    <div>
-      <p class="what" style="color:var(--muted);max-width:44em">This model optimizes curve-fitting by combining polynomial fitting, adaptive sampling, and recursive iterating. The goal is to use as little compute as possible to achieve only the necessary level of accuracy when solving ordinary differential equations. It samples new points only where residuals are high, making it efficient for large datasets.</p>
-      <div class="stage" id="rpas" style="margin-top:28px">
-        <span class="note" data-iter>Iteration 1</span>
-        <canvas style="height:clamp(300px,36vw,440px)" role="img" aria-label="An approximation converging to the actual solution over successive iterations as sampled points are added where the error is high"></canvas>
-      </div>
-      <p class="links"><a href="assets/pdfs/RPAS_Write_Up.pdf">Write-up</a><a href="https://github.com/hudsonRmiller/Recursive-Polynomial-Adaptive-Sampling">Code</a></p>
-    </div>
-  </div>
-</section>
-
-<section class="block">
   <div class="wrap">
+
+    <article class="feature" id="debruijn">
+      <div class="feature-head">
+        <h3>Reconstruction and the Intersection Number of the Undirected de Bruijn Graph</h3>
+        <div>
+          <p>Miller, H. Manuscript in preparation for submission.</p>
+          <div class="thm"><b>Theorem 1 (Reconstruction).</b> For all k, n ≥ 2, the undirected de Bruijn graph B&#x0302;(k, n) on ≥ 3 vertices is reconstructible.</div>
+          <div class="thm"><b>Theorem 2 (Intersection Number).</b> For k ≥ 3, n ≥ 4, the intersection number of the undirected de Bruijn graph B&#x0302;(k, n) is i(B&#x0302;(k, n)) = k<sup>n</sup> − k(k + 1)/2 − ⅔ k(k − 1)(k + 4).</div>
+          <p class="links"><a href="debruijn.html">Read more</a></p>
+        </div>
+      </div>
+      <div class="stage recon">
+        <span class="note" data-step></span>
+        <canvas style="height:clamp(320px,40vw,500px)" role="img" aria-label="The reconstruction algorithm: a hub is deleted, its neighborhood is found, and the graph is rebuilt"></canvas>
+      </div>
+      <div class="rows" style="margin-top:24px">
+        <div class="row"><h3>Invited Speaker, Rutgers DIMACS Graduate Seminar in Combinatorics</h3><span class="when">Fall 2026</span></div>
+        <div class="row"><div class="withmark"><img class="mark chip" src="assets/img/logo-cimpa.png" alt=""><h3>Presenter, CIMPA Summer School in Combinatorics and Graph Theory, Costa Rica</h3></div><span class="when">Summer 2026</span></div>
+      </div>
+    </article>
+
+    <article class="feature" id="p-rpas">
+      <div class="feature-head">
+        <h3>Recursive Polynomial Adaptive Sampling</h3>
+        <div>
+          <p>This model optimizes curve-fitting by combining polynomial fitting, adaptive sampling, and recursive iterating. The goal is to use as little compute as possible to achieve only the necessary level of accuracy when solving ordinary differential equations.</p>
+          <p class="links"><a href="rpas.html">Write-up</a><a href="https://github.com/hudsonRmiller/Recursive-Polynomial-Adaptive-Sampling" target="_blank" rel="noopener">Code on GitHub</a></p>
+        </div>
+      </div>
+      <div class="stage" id="rpas">
+        <span class="note" data-iter>Iteration 1</span>
+        <canvas style="height:clamp(300px,36vw,460px)" role="img" aria-label="An approximation converging to the actual solution over successive iterations"></canvas>
+      </div>
+    </article>
+
+    <article class="feature" id="p-destroyer">
+      <div class="feature-head">
+        <h3>Graph-Based Point Cloud Data Reduction</h3>
+        <div>
+          <p class="links" style="margin-top:0"><a href="https://github.com/hudsonRmiller/graph.theory.data.destroyer" target="_blank" rel="noopener">Code on GitHub</a></p>
+        </div>
+      </div>
+      <div class="stage" id="destroyer">
+        <span class="note" data-level></span>
+        <canvas style="height:clamp(300px,40vw,480px)" role="img" aria-label="A noisy point cloud joined by nearest-neighbour edges and reduced to component centroids, repeatedly"></canvas>
+      </div>
+    </article>
+
     <article class="feature" id="rowing">
       <div class="feature-head">
         <div class="withmark"><img class="mark" style="height:44px" src="assets/img/logo-colgate-rowing.png" alt=""><h3>Colgate Rowing Telemetry and Data Analysis</h3></div>
         <div>
           <p>Team dashboard for Peach PowerLine data from Colgate's 8+. Coaches upload sessions; every athlete can see every session (whole boat); each athlete has a season page with their own trends.</p>
           <p>This is some work I did for the Colgate rowing team. We walk through data cleaning, summary, analysis, and modelling.</p>
-          <p class="links"><a href="https://colgate-rowing.vercel.app">colgate-rowing.vercel.app</a><a href="https://hudson-miller.github.io/">Data analysis</a></p>
+          <p class="links"><a href="https://colgate-rowing.vercel.app" target="_blank" rel="noopener">colgate-rowing.vercel.app</a><a href="https://hudson-miller.github.io/" target="_blank" rel="noopener">Data analysis</a></p>
         </div>
       </div>
       <div class="stage shade">
@@ -89,25 +92,27 @@
       </div>
       <p style="color:var(--faint);font-size:15px;margin-top:12px">Illustrative data.</p>
     </article>
-    <article class="feature" id="p-destroyer">
+
+    <article class="feature" id="lexsegment">
       <div class="feature-head">
-        <h3>graph.theory.data.destroyer</h3>
+        <h3>Strongly Stable Generators of Lexsegment Ideals</h3>
         <div>
-          <!-- YOUR TEXT: description -->
-          <p class="links" style="margin-top:0"><a href="https://github.com/hudsonRmiller/graph.theory.data.destroyer">Code</a></p>
+          <p>Sosa, G.; Miller, H.; Santo, K.; and Mackenzie, N. Manuscript in preparation for submission.</p>
+          <!-- YOUR TEXT: abstract or description of this paper -->
         </div>
       </div>
-      <div class="stage" id="destroyer">
-        <span class="note" data-level></span>
-        <canvas style="height:clamp(300px,40vw,480px)" role="img" aria-label="A noisy point cloud joined by nearest-neighbour edges and collapsed to component centroids, repeatedly"></canvas>
+      <div class="stage" style="display:flex;justify-content:center;padding:28px 0"><svg class="lex" viewBox="0 0 400 300" style="width:min(100%,560px);height:auto" role="img" aria-label="Monomials of degree four in three variables, with a growing lexsegment and its strongly stable generators"></svg></div>
+      <div class="rows" style="margin-top:24px">
+        <div class="row"><div class="withmark"><img class="mark chip" src="assets/img/logo-cimpa.png" alt=""><h3>Presenter, CIMPA Summer School in Combinatorics and Graph Theory, Costa Rica</h3></div><span class="when">Summer 2026</span></div>
       </div>
     </article>
+
     <article class="feature" id="alldorms">
       <div class="feature-head">
-        <h3>AllDorms</h3>
+        <div><h3>AllDorms</h3><strong class="big">$11,000</strong></div>
         <div>
           <p>Built a college packing-list website for new parents; generated more than $11,000 in purchases.</p>
-          <p class="links"><a href="https://alldorms.net">alldorms.net</a><a href="https://github.com/hudsonRmiller/alldorms">Code</a></p>
+          <p class="links"><a href="https://alldorms.net" target="_blank" rel="noopener">alldorms.net</a><a href="https://github.com/hudsonRmiller/alldorms" target="_blank" rel="noopener">Code on GitHub</a></p>
         </div>
       </div>
       <div class="shots">
@@ -118,28 +123,20 @@
         </div>
       </div>
     </article>
+
     <article class="feature">
       <div class="pair">
         <div id="projectverify">
           <div class="stage"><img src="assets/img/projectverify.jpg" alt="ProjectVerify" loading="lazy"></div>
           <h3>ProjectVerify</h3>
           <p>Obtained grant funding to build an early-stage software company offering AI "thesis defense" interviews for technical projects.</p>
-          <p class="links"><a href="https://www.useprojectverify.com">useprojectverify.com</a></p>
+          <p class="links"><a href="https://www.useprojectverify.com" target="_blank" rel="noopener">useprojectverify.com</a></p>
         </div>
         <div id="tiretap">
           <div class="stage"><img src="assets/img/tiretap.jpg" alt="TireTap" loading="lazy" style="aspect-ratio:1440/900;object-fit:cover"></div>
           <h3>TireTap</h3>
           <p>A mountain bike game for your phone</p>
-          <p class="links"><a href="https://tiretap.racing">tiretap.racing</a></p>
-        </div>
-      </div>
-    </article>
-    <article class="feature" id="wse">
-      <div class="feature-head" style="margin-bottom:0">
-        <h3>White Space Explorer</h3>
-        <div>
-          <p>Map a research field's intellectual landscape and surface concrete unexplored gaps as publishable hypotheses.</p>
-          <p class="links"><a href="https://github.com/hudsonRmiller/white-space-explorer">Code</a></p>
+          <p class="links"><a href="https://tiretap.racing" target="_blank" rel="noopener">tiretap.racing</a></p>
         </div>
       </div>
     </article>
@@ -164,7 +161,7 @@
 </main>
 <footer>
   <div class="wrap">
-    <p>© 2026 Hudson Miller · <a href="mailto:hrmiller@colgate.edu">hrmiller@colgate.edu</a> · <a href="https://github.com/hudsonRmiller">GitHub</a></p>
+    <p>© 2026 Hudson Miller · <a href="mailto:hrmiller@colgate.edu">hrmiller@colgate.edu</a> · <a href="https://github.com/hudsonRmiller" target="_blank" rel="noopener">GitHub</a></p>
     <p>Campus aerial and Memorial Chapel: Colgate University, CC BY-SA 4.0. Taylor Lake: Balon Greyjoy, CC0. Via Wikimedia Commons.</p>
   </div>
 </footer>

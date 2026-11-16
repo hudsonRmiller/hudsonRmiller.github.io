@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reconstruction of the Undirected de Bruijn Graph · Hudson Miller</title>
+<meta name="description" content="Reconstruction and the intersection number of the undirected de Bruijn graph, by Hudson Miller.">
+<meta name="theme-color" content="#0a100e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="name" href="index.html">Hudson Miller</a>
+    <nav aria-label="Main"><ul><li><a href="index.html">About</a></li><li><a href="research.html" aria-current="page">Research and Projects</a></li><li><a href="academics.html">Academics</a></li><li><a class="pill" href="mailto:hrmiller@colgate.edu">Email</a></li></ul></nav>
+  </div>
+</header>
+<main>
+
+<section class="top">
+  <div class="wrap">
+    <p class="crumb rise"><a href="research.html#debruijn">← Research and Projects</a></p>
+    <h1 class="rise long">Reconstruction and the Intersection Number of the Undirected de Bruijn Graph</h1>
+    <p class="lede rise d1" style="color:var(--muted);margin-top:24px">Hudson Miller, Colgate University Department of Mathematics. Rutgers Graduate Seminar in Combinatorics, October 14, 2026.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split">
+    <h2>Cards and decks</h2>
+    <div class="duo">
+      <div class="prose">
+        <p>For a graph G:</p>
+        <p><b>A card.</b> G with one vertex deleted.</p>
+        <p><b>The deck.</b> The vertex-deletion deck of G, D(G), is the multiset of all cards.</p>
+      </div>
+      <svg class="fig" viewBox="0 0 600 300" role="img" aria-label="A graph with one vertex deleted at a time"></svg>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split">
+    <h2>The Kelly–Ulam Reconstruction Conjecture</h2>
+    <div class="prose">
+      <div class="thm lead"><b>The Kelly–Ulam Conjecture.</b> Every finite simple graph on ≥ 3 vertices is determined up to isomorphism by its vertex-deletion deck.</div>
+      <p>Equivalently: D(G′) ≅ D(G) ⇒ G′ ≅ G.</p>
+      <p>Proven for many families: trees, regular graphs, disconnected graphs, maximal planar graphs, and others.</p>
+      <p>B&#x0302;(k, n) does not belong to any of these classes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split">
+    <h2>What is a de Bruijn sequence?</h2>
+    <div class="duo">
+      <div class="prose">
+        <p>Fix a k-alphabet Σ<sub>k</sub> = {0, 1, …, k − 1} and a length n.</p>
+        <p><b>De Bruijn sequence.</b> A cyclic string of length k<sup>n</sup> in which every word of length n over Σ<sub>k</sub> appears exactly once as a substring, including wrap-around substrings.</p>
+        <p>Example: k = 2, n = 3. Sequence: <span class="mono">00010111</span></p>
+      </div>
+      <div class="stage wheel">
+        <canvas style="height:300px" role="img" aria-label="A window of length three sliding around the cyclic sequence 00010111"></canvas>
+        <p class="words" data-words></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split">
+    <h2>The undirected de Bruijn graph, B&#x0302;(k, n)</h2>
+    <div class="duo">
+    <div class="prose">
+      <p><b>Vertices:</b> all words of length n − 1 (|V| = k<sup>n−1</sup>).</p>
+      <p><b>Edges:</b> there is a directed edge u → v if suf(u) = pre(v).</p>
+      <p>To “undirect” B(k, n):</p>
+      <ol><li>Remove the orientation of all edges.</li><li>Delete loops.</li><li>Collapse all parallel edges.</li></ol>
+      <p><b>Adjacency in B&#x0302;(k, n).</b> For u ≠ v: u ∼ v if and only if suf(u) = pre(v) or suf(v) = pre(u).</p>
+    </div>
+    <canvas id="hero-graph" style="width:100%;height:380px" role="img" aria-label="The undirected de Bruijn graph on two-letter words over four symbols"></canvas>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split">
+    <h2>Main result 1</h2>
+    <div class="prose">
+      <div class="thm lead"><b>Theorem 1 (Reconstruction).</b> For all k, n ≥ 2, the undirected de Bruijn graph B&#x0302;(k, n) on ≥ 3 vertices is reconstructible.</div>
+      <p><b>Definition (Hub vertex).</b> For each a ∈ Σ<sub>k</sub>, the hub a = a<sup>n−1</sup> is the constant word aaa…. The k hubs form an independent set.</p>
+      <p><b>Degrees (for n ≥ 4):</b> hubs have degree 2k − 2, period-two vertices have degree 2k − 1, all other vertices have degree 2k. The minimum degree δ = 2k − 2 is achieved exactly on the k hubs.</p>
+      <div class="stage recon" style="margin:28px 0">
+        <span class="note" data-step></span>
+        <canvas style="height:clamp(320px,38vw,460px)" role="img" aria-label="The reconstruction algorithm: a hub is deleted, its neighborhood is found, and the graph is rebuilt"></canvas>
+      </div>
+      <div class="rows">
+        <div class="row"><h3>Step 1: identify the hub card</h3><span class="when"></span>
+          <p class="what">C is a hub-deletion card ⇔ δ(C) = 2k − 2 and |Hub(C)| = k − 1.</p></div>
+        <div class="row"><h3>Step 2: find the neighborhood of the deleted hub</h3><span class="when"></span>
+          <p class="what">In a hub card C = G − a, the set N<sub>G</sub>(a) is the unique size-(2k − 2) subset of {v : deg<sub>C</sub>(v) = 2k − 1} inducing K<sub>k−1,k−1</sub>.</p></div>
+        <div class="row"><h3>Step 3: reconstruct the graph</h3><span class="when"></span>
+          <p class="what">Joining x to the induced K<sub>k−1,k−1</sub> yields B&#x0302;(k, n). We reconstruct the graph from one card.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split">
+    <h2>Recap</h2>
+    <div class="table-scroll">
+      <table class="recap">
+        <thead><tr><th>Parameters</th><th>Reconstruction mechanism</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>n = 2, k ≥ 3</td><td>B&#x0302;(k, 2) = K<sub>k</sub> is regular</td><td>reconstructible</td></tr>
+          <tr><td>k ≥ 3, n ≥ 3</td><td>hub card and neighbor subdeck</td><td>reconstructible</td></tr>
+          <tr><td>k = 2, n = 3</td><td>degree multiset</td><td>reconstructible</td></tr>
+          <tr><td>k = 2, n ≥ 4</td><td>hub card and short-cycle counts</td><td>reconstructible</td></tr>
+          <tr><td>(k, n) = (2, 2)</td><td>K<sub>2</sub> and 2K<sub>1</sub> share a deck</td><td>not reconstructible</td></tr>
+        </tbody>
+      </table>
+      <p style="color:var(--muted);margin-top:18px">In all cases, a single recognizable card is all we need.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split">
+    <h2>Main result 2</h2>
+    <div class="prose">
+      <p><b>Intersection number i(G)</b> (Erdős–Goodman–Pósa, 1966). The smallest number of cliques needed to cover every edge of G. Computing i(G) is NP-hard in general (Kou–Stockmeyer–Wong, 1978).</p>
+      <div class="thm lead"><b>Theorem 2 (Intersection Number).</b> For k ≥ 3, n ≥ 4, the intersection number of the undirected de Bruijn graph B&#x0302;(k, n) is
+        <span class="eq">i(B&#x0302;(k, n)) = k<sup>n</sup> − k(k + 1)/2 − ⅔ k(k − 1)(k + 4).</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split">
+    <h2>Takeaways</h2>
+    <div>
+      <ul class="plain">
+        <li>B&#x0302;(k, n) is reconstructible for all k, n ≥ 2 except (2, 2).</li>
+        <li>On the way we characterized the degree structure and hub geometry of B&#x0302;(k, n).</li>
+        <li>The algorithm identifies one hub card and then uses only that card to rebuild the graph.</li>
+        <li>The same local structure allows us to derive the intersection number i(B&#x0302;(k, n)) in closed form.</li>
+      </ul>
+      <div class="photos">
+        <div class="photo"><img src="assets/img/talk.jpg" alt="Hudson Miller presenting the reconstruction algorithm" loading="lazy"></div>
+        <div class="photo tall"><img src="assets/img/poster.jpg" alt="Hudson Miller presenting his poster" loading="lazy"></div>
+      </div>
+      <p class="links" style="margin-top:28px"><a href="research.html#debruijn">← Research and Projects</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    <p>© 2026 Hudson Miller · <a href="mailto:hrmiller@colgate.edu">hrmiller@colgate.edu</a> · <a href="https://github.com/hudsonRmiller" target="_blank" rel="noopener">GitHub</a></p>
+    <p>Campus aerial and Memorial Chapel: Colgate University, CC BY-SA 4.0. Taylor Lake: Balon Greyjoy, CC0. Via Wikimedia Commons.</p>
+  </div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

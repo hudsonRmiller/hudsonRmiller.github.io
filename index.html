@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hudson Miller · Research Portfolio</title>
-<meta name="description" content="Hudson Miller. Mathematics, Colgate University.">
+<meta name="description" content="Research portfolio of Hudson Miller. Mathematics, Colgate University.">
 <meta name="theme-color" content="#0a100e">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
@@ -20,8 +20,9 @@
 </header>
 <main>
 
-<section class="hero">
-  <img src="assets/img/golden.jpg" alt="" style="object-position:50% 52%">
+<section class="hero board">
+  <img src="assets/img/board.jpg" alt="Hudson Miller at a chalkboard">
+  <canvas id="hero-graph" aria-hidden="true"></canvas>
   <div class="wrap">
     <h1 class="rise">Hudson Miller</h1>
     <p class="lede rise d1">Research portfolio. Mathematics, Colgate University.</p>
@@ -37,38 +38,32 @@
   </div>
 </section>
 
-<div class="wrap"><div class="logos">
-  <img src="assets/img/logo-colgate.svg" alt="Colgate University">
-  <img src="assets/img/logo-colgate-rowing.png" alt="Colgate Rowing">
-  <img class="chip" src="assets/img/logo-cimpa.png" alt="CIMPA">
-</div></div>
-
 <section class="block" id="work" style="border-top:0">
   <div class="wrap">
     <h2 style="margin-bottom:clamp(28px,4vw,48px)">Research and Projects</h2>
     <div class="widgets">
-      <a class="widget wide" href="research.html#debruijn">
-        <div class="wstage"><svg class="fig" viewBox="0 0 600 300" aria-hidden="true"></svg></div>
+      <a class="widget wide" href="debruijn.html">
+        <div class="wstage recon"><canvas aria-hidden="true"></canvas></div>
         <h3>Reconstruction and the Intersection Number of the Undirected de Bruijn Graph</h3>
       </a>
-      <a class="widget" href="research.html#lexsegment">
-        <div class="wstage"><svg class="lex" viewBox="0 0 400 300" aria-hidden="true"></svg></div>
-        <h3>Strongly Stable Generators of Lexsegment Ideals</h3>
-      </a>
-      <a class="widget" href="research.html#p-rpas">
+      <a class="widget" href="rpas.html">
         <div class="wstage" id="rpas"><canvas aria-hidden="true"></canvas></div>
         <h3>Recursive Polynomial Adaptive Sampling</h3>
+      </a>
+      <a class="widget" href="research.html#p-destroyer">
+        <div class="wstage" id="destroyer"><canvas aria-hidden="true"></canvas></div>
+        <h3>Graph-Based Point Cloud Data Reduction</h3>
       </a>
       <a class="widget" href="research.html#rowing">
         <div class="wstage"><canvas id="row-curves" aria-hidden="true"></canvas></div>
         <h3>Colgate Rowing Telemetry and Data Analysis</h3>
       </a>
-      <a class="widget" href="research.html#p-destroyer">
-        <div class="wstage" id="destroyer"><canvas aria-hidden="true"></canvas></div>
-        <h3>graph.theory.data.destroyer</h3>
+      <a class="widget" href="research.html#lexsegment">
+        <div class="wstage"><svg class="lex" viewBox="0 0 400 300" aria-hidden="true"></svg></div>
+        <h3>Strongly Stable Generators of Lexsegment Ideals</h3>
       </a>
       <a class="widget" href="research.html#alldorms">
-        <div class="wstage"><img src="assets/img/alldorms-home.jpg" alt="" loading="lazy"></div>
+        <div class="wstage"><img src="assets/img/alldorms-home.jpg" alt="" loading="lazy"><span class="badge">$11,000 in purchases</span></div>
         <h3>AllDorms</h3>
       </a>
       <a class="widget" href="research.html#projectverify">
@@ -96,17 +91,17 @@
           <p class="what">Conduct paid research in algebraic graph theory, investigating connections between existing work on reconstructing monomial orders and the graph reconstruction conjecture.</p>
           <p class="links"><a href="research.html">Research and Projects</a></p></div>
         <div class="row"><h3>Hamilton, NY | Philadelphia, PA</h3><span class="when"></span>
-          <p class="links"><a href="mailto:hrmiller@colgate.edu">hrmiller@colgate.edu</a><a href="https://github.com/hudsonRmiller">GitHub</a></p></div>
+          <p class="links"><a href="mailto:hrmiller@colgate.edu">hrmiller@colgate.edu</a><a href="https://github.com/hudsonRmiller" target="_blank" rel="noopener">GitHub</a></p></div>
       </div>
       <div class="photos">
         <div class="photo"><img src="assets/img/talk.jpg" alt="Hudson Miller giving a talk on reconstructing the de Bruijn graph" loading="lazy"></div>
-        <div class="photo tall"><img src="assets/img/chalk.jpg" alt="Hudson Miller at a chalkboard" loading="lazy"></div>
+        <div class="photo tall"><img src="assets/img/poster.jpg" alt="Hudson Miller presenting his poster" loading="lazy"></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="block">
+<section class="block photo-bg"><img class="bg" src="assets/img/golden.jpg" alt="" loading="lazy" style="object-position:50% 55%">
   <div class="wrap split">
     <h2>Leadership and Activities</h2>
     <div class="rows">
@@ -136,7 +131,7 @@
 </main>
 <footer>
   <div class="wrap">
-    <p>© 2026 Hudson Miller · <a href="mailto:hrmiller@colgate.edu">hrmiller@colgate.edu</a> · <a href="https://github.com/hudsonRmiller">GitHub</a></p>
+    <p>© 2026 Hudson Miller · <a href="mailto:hrmiller@colgate.edu">hrmiller@colgate.edu</a> · <a href="https://github.com/hudsonRmiller" target="_blank" rel="noopener">GitHub</a></p>
     <p>Campus aerial and Memorial Chapel: Colgate University, CC BY-SA 4.0. Taylor Lake: Balon Greyjoy, CC0. Via Wikimedia Commons.</p>
   </div>
 </footer>

@@ -72,6 +72,104 @@
     if (!still) setInterval(function () { len = len % ms.length + 1; show(len); }, 1100);
   });
 
+
+  // ------------------------------------------------------------------
+  // Undirected de Bruijn graphs on two-letter words (B-hat(k,3) in the talk's notation)
+  function dbg(k, order) {
+    var words = [], i, j, idx = {};
+    for (i = 0; i < k; i++) for (j = 0; j < k; j++) words.push('' + i + j);
+    if (order) words = order;
+    words.forEach(function (w, n) { idx[w] = n; });
+    var edges = [];
+    words.forEach(function (u, a) { words.forEach(function (v, b) { if (a < b && (u[1] === v[0] || v[1] === u[0])) edges.push([a, b]); }); });
+    return { words: words, edges: edges, idx: idx, hub: words.map(function (w) { return w[0] === w[1]; }) };
+  }
+
+  // hero: a slowly turning B-hat(4,3) with light travelling along its edges
+  var hg = document.getElementById('hero-graph');
+  if (hg) (function () {
+    var G = dbg(4);
+    animate(hg, function (t) {
+      var c = fit(hg), ctx = c.ctx, w = c.w, h = c.h, n = G.words.length;
+      var cx = w > 820 ? w * 0.53 : w * 0.5, cy = h * 0.45, R = Math.min(h * 0.37, w * 0.3), rot = still ? 0.3 : t / 26000;
+      var P = G.words.map(function (_, i) { var a = rot + i / n * 6.2832; return [cx + Math.cos(a) * R, cy + Math.sin(a) * R * 0.92]; });
+      ctx.lineWidth = 1; ctx.strokeStyle = INK;
+      G.edges.forEach(function (e, i) {
+        var pulse = still ? 0 : Math.max(0, Math.sin(t / 1400 + i * 0.83)); pulse = pulse * pulse * pulse;
+        ctx.globalAlpha = 0.13 + 0.42 * pulse; ctx.beginPath(); ctx.moveTo(P[e[0]][0], P[e[0]][1]); ctx.lineTo(P[e[1]][0], P[e[1]][1]); ctx.stroke();
+      });
+      ctx.font = '12px "IBM Plex Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      P.forEach(function (p, i) {
+        ctx.globalAlpha = 0.9; ctx.fillStyle = G.hub[i] ? ACCENT : INK; ctx.beginPath(); ctx.arc(p[0], p[1], G.hub[i] ? 5 : 3.5, 0, 6.2832); ctx.fill();
+        var a = rot + i / n * 6.2832; ctx.globalAlpha = 0.55; ctx.fillStyle = INK; ctx.fillText(G.words[i], cx + Math.cos(a) * (R + 22), cy + Math.sin(a) * (R * 0.92 + 20));
+      });
+      ctx.globalAlpha = 1;
+    });
+  })();
+
+  // the reconstruction algorithm on B-hat(3,3): delete a hub, find its K_{k-1,k-1}, rejoin
+  [].forEach.call(document.querySelectorAll('.recon'), function (box) {
+    var cv = box.querySelector('canvas'), label = box.querySelector('[data-step]');
+    var G = dbg(3, ['00', '01', '02', '12', '11', '21', '22', '20', '10']);
+    var hub = 0, nb = [1, 2, 7, 8], sideA = { 1: 1, 2: 1 };
+    var isNb = function (i) { return nb.indexOf(i) >= 0; };
+    var STEPS = ['', 'Step 1: identify the hub card', 'Step 2: find the neighborhood of the deleted hub', 'Step 3: reconstruct the graph'];
+    var DUR = 2600;
+    animate(cv, function (t) {
+      var tt = still ? DUR * 3.9 : t % (DUR * 4.6), ph = Math.min(3, Math.floor(tt / DUR)), u = ease((tt - ph * DUR) / 900);
+      var c = fit(cv), ctx = c.ctx, w = c.w, h = c.h, n = 9, cx = w / 2, cy = h / 2 + (label ? 10 : 0), R = Math.min(w * 0.36, h * 0.36);
+      var P = G.words.map(function (_, i) { var a = Math.PI + i / n * 6.2832; return [cx + Math.cos(a) * R * 1.25, cy + Math.sin(a) * R]; });
+      var gone = ph === 0 ? 0 : ph === 1 ? u : ph === 2 ? 1 : 1 - u;   // how deleted the hub is
+      var lit = ph === 2 ? u : ph === 3 ? 1 : 0;                         // neighbourhood highlight
+      ctx.lineCap = 'round';
+      G.edges.forEach(function (e) {
+        var a = e[0], b = e[1], touchesHub = a === hub || b === hub, inK = isNb(a) && isNb(b);
+        if (touchesHub) {
+          var p0 = P[hub], p1 = P[a === hub ? b : a];
+          if (ph === 3) { ctx.strokeStyle = ACCENT; ctx.globalAlpha = 1; ctx.lineWidth = 1.8; ctx.setLineDash(u < 1 ? [5, 5] : []); ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p0[0] + (p1[0] - p0[0]) * u, p0[1] + (p1[1] - p0[1]) * u); ctx.stroke(); ctx.setLineDash([]); }
+          else { ctx.strokeStyle = INK; ctx.globalAlpha = 0.4 * (1 - gone); ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke(); }
+          return;
+        }
+        ctx.strokeStyle = inK && lit ? ACCENT : INK; ctx.globalAlpha = inK ? 0.4 + 0.6 * lit : 0.4 - 0.22 * lit; ctx.lineWidth = inK ? 1.1 + lit : 1.1;
+        ctx.beginPath(); ctx.moveTo(P[a][0], P[a][1]); ctx.lineTo(P[b][0], P[b][1]); ctx.stroke();
+      });
+      ctx.font = '12px "IBM Plex Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      P.forEach(function (p, i) {
+        var a = Math.PI + i / n * 6.2832, alpha = i === hub ? 1 - gone : 1, r = 4.5;
+        if (i === hub && ph === 3) alpha = u;
+        ctx.globalAlpha = alpha;
+        if (isNb(i) && lit) { ctx.strokeStyle = ACCENT; ctx.lineWidth = 1.5; ctx.globalAlpha = lit; ctx.beginPath(); ctx.arc(p[0], p[1], 10, 0, 6.2832); ctx.stroke(); ctx.globalAlpha = 1; }
+        ctx.fillStyle = (i === hub && ph === 3) || G.hub[i] ? ACCENT : INK; ctx.beginPath(); ctx.arc(p[0], p[1], G.hub[i] ? 5.5 : r, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = FAINT; ctx.globalAlpha = alpha * 0.95;
+        ctx.fillText(i === hub && ph === 3 ? 'x' : G.words[i], cx + Math.cos(a) * (R * 1.25 + 22), cy + Math.sin(a) * (R + 18));
+      });
+      ctx.globalAlpha = 1;
+      if (label) label.textContent = STEPS[ph];
+    });
+  });
+
+  // de Bruijn sequence 00010111: a window of length 3 slides around the cycle
+  [].forEach.call(document.querySelectorAll('.wheel'), function (box) {
+    var cv = box.querySelector('canvas'), out = box.querySelector('[data-words]'), SEQ = '00010111', seen = -1;
+    animate(cv, function (t) {
+      var c = fit(cv), ctx = c.ctx, w = c.w, h = c.h, cx = w / 2, cy = h / 2, R = Math.min(w, h) * 0.34;
+      var pos = still ? 2 : (t / 1300) % 8, at = Math.floor(pos), u = ease((pos - at) / 0.45), head = at + u;
+      ctx.strokeStyle = 'rgba(238,242,238,0.16)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.stroke();
+      // the window: an arc covering three consecutive letters
+      var a0 = -Math.PI / 2 + (head - 0.5) / 8 * 6.2832, a1 = a0 + 3 / 8 * 6.2832;
+      ctx.strokeStyle = ACCENT; ctx.lineWidth = 34; ctx.lineCap = 'round'; ctx.globalAlpha = 0.28; ctx.beginPath(); ctx.arc(cx, cy, R, a0 + 0.2, a1 - 0.2); ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.font = '500 20px "IBM Plex Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      for (var i = 0; i < 8; i++) {
+        var a = -Math.PI / 2 + i / 8 * 6.2832, d = ((i - head) % 8 + 8) % 8, inWin = d < 2.5 || d > 7.5;
+        ctx.fillStyle = '#0f1613'; ctx.beginPath(); ctx.arc(cx + Math.cos(a) * R, cy + Math.sin(a) * R, 15, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = inWin ? INK : FAINT; ctx.fillText(SEQ[i], cx + Math.cos(a) * R, cy + Math.sin(a) * R + 1);
+      }
+      var word = SEQ[at % 8] + SEQ[(at + 1) % 8] + SEQ[(at + 2) % 8];
+      ctx.font = '500 26px "IBM Plex Mono", monospace'; ctx.fillStyle = INK; ctx.fillText(word, cx, cy);
+      if (out && at !== seen) { seen = at; var html = ''; for (var k = 0; k < 8; k++) { var wd = SEQ[k] + SEQ[(k + 1) % 8] + SEQ[(k + 2) % 8]; html += '<span' + (k === at ? ' class="now"' : '') + '>' + wd + '</span>'; } out.innerHTML = html; }
+    });
+  });
+
   // ------------------------------------------------------------------
   // Recursive polynomial adaptive sampling, fitted over successive iterations
   var rp = document.getElementById('rpas');
