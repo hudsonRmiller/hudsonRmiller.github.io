@@ -49,6 +49,29 @@
     }
   }
 
+
+  // ------------------------------------------------------------------
+  // Degree-4 monomials in x > y > z; an initial lexsegment grows, and the monomials
+  // that generate it under the moves x_j -> x_i (i < j) are marked.
+  [].forEach.call(document.querySelectorAll('.lex'), function (lx) {
+    var NS = 'http://www.w3.org/2000/svg', D = 4, ms = [], a, b;
+    for (a = D; a >= 0; a--) for (b = D - a; b >= 0; b--) ms.push([a, b, D - a - b]);
+    var pos = function (m) { return [200 + (m[2] - m[1]) * 38, 36 + (D - m[0]) * 58]; };
+    var mk = function (n, at) { var e = document.createElementNS(NS, n); for (var k in at) e.setAttribute(k, at[k]); lx.appendChild(e); return e; };
+    ms.forEach(function (m) { [[0, 1], [1, 2]].forEach(function (mv) { if (!m[mv[0]]) return; var t = m.slice(); t[mv[0]]--; t[mv[1]]++; var p = pos(m), q = pos(t); mk('line', { x1: p[0], y1: p[1], x2: q[0], y2: q[1] }); }); });
+    var dots = ms.map(function (m) { var p = pos(m); return mk('circle', { cx: p[0], cy: p[1], r: 7, 'class': 'out' }); });
+    var show = function (len) {
+      var inSeg = {}; ms.slice(0, len).forEach(function (m) { inSeg[m.join()] = 1; });
+      ms.forEach(function (m, i) {
+        var cls = 'out';
+        if (i < len) { cls = 'gen'; for (var j = 0; j < 2; j++) { if (!m[j]) continue; var t = m.slice(); t[j]--; t[j + 1]++; if (inSeg[t.join()]) cls = 'in'; } }
+        dots[i].setAttribute('class', cls); dots[i].setAttribute('r', cls === 'gen' ? 9 : 7);
+      });
+    };
+    var len = 7; show(len);
+    if (!still) setInterval(function () { len = len % ms.length + 1; show(len); }, 1100);
+  });
+
   // ------------------------------------------------------------------
   // Recursive polynomial adaptive sampling, fitted over successive iterations
   var rp = document.getElementById('rpas');
