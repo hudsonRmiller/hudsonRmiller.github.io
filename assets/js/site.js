@@ -172,13 +172,15 @@
     var layer = document.createElement('canvas');
 
     // timeline (ms)
-    var T = { dots: 0, nn1: 2600, mv1: 4000, nn2: 5400, mv2: 6400, snap: 7600, edges: 9000, labels: 11200, hold: 12200, wipe: 15200, end: 16800 };
+    var T = { dots: 0, nn1: 2600, mv1: 4000, nn2: 5400, mv2: 6400, snap: 7600, edges: 9000, labels: 11200, hold: 12200, wipe: 16200, end: 17800 };
 
     function objectPos() {
       var cs = getComputedStyle(bgImg).objectPosition.split(' ');
       return [parseFloat(cs[0]) / 100 || 0.5, parseFloat(cs[1]) / 100 || 0.5];
     }
+    var start = null; // the loop begins on the finished graph, not on the point cloud
     animate(cv, function (t) {
+      if (start === null) start = t;
       var rect = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 1.6);
       var w = Math.max(10, Math.round(rect.width)), h = Math.max(10, Math.round(rect.height));
       if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); layer.width = cv.width; layer.height = cv.height; }
@@ -189,7 +191,7 @@
       var toScreen = function (p) { var q = Hq(p[0] / AR, p[1]); return [ox + q[0] * sc, oy + q[1] * sc]; };
       var unit = sc * 2.2; // stroke scale
 
-      var tt = still ? T.hold + 10 : t % T.end;
+      var tt = still ? T.hold + 10 : (t - start + T.hold) % T.end;
       var seg = function (a, b) { return Math.max(0, Math.min(1, (tt - a) / (b - a))); };
       // positions of every point at this moment
       var m1 = ease(seg(T.mv1, T.mv1 + 1100)), m2 = ease(seg(T.mv2, T.mv2 + 1100)), m3 = ease(seg(T.snap, T.snap + 1300));
