@@ -246,3 +246,17 @@ ul.plain li { padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 
   .hero .wrap { padding-top: 72px; }
 }
 @media (max-width: 480px) { .long-only { display: none; } }
+
+/* chalk hero: photo, then the chalk canvas (with the person redrawn on top), then the shade, then the text */
+.hero.board > img.board-img { animation: none; filter: none; }
+.hero .chalk { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero.board::after { z-index: 0; }
+.hero.board::after { background: linear-gradient(90deg, rgba(10,16,14,.82) 0%, rgba(10,16,14,.5) 38%, rgba(10,16,14,.08) 58%, rgba(10,16,14,0) 100%), linear-gradient(0deg, var(--bg) 0%, rgba(10,16,14,0) 40%); }
+@media (max-width: 700px) { .hero.board::after { background: linear-gradient(180deg, rgba(10,16,14,.35) 0%, rgba(10,16,14,.7) 50%, var(--bg) 100%); } }
+/* phones: the board and the chalk in a band at the top, the text underneath */
+@media (max-width: 700px) {
+  .hero.board > img.board-img, .hero .chalk { height: 330px; bottom: auto; }
+  .hero.board > img.board-img { object-position: 100% 30%; }
+  .hero.board::after { background: linear-gradient(180deg, rgba(10,16,14,0) 0px, rgba(10,16,14,0) 230px, var(--bg) 330px, var(--bg) 100%); }
+  .hero .wrap { padding-top: 300px; }
+}

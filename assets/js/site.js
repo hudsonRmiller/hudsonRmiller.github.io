@@ -109,6 +109,164 @@
     });
   });
 
+  // ------------------------------------------------------------------
+  // Hero: chalk on the board itself. A noisy point cloud is reduced by repeated
+  // nearest-neighbour coarsening until it settles on the vertices of B-hat(3,3),
+  // whose edges are then drawn; then the board is wiped and it starts again.
+  // Everything is drawn in the plane of the board through a homography fitted to
+  // the board's corners in the photograph, and the person is drawn back on top.
+  var hero = document.querySelector('.chalk-hero');
+  if (hero) (function () {
+    var cv = hero.querySelector('canvas'), bgImg = hero.querySelector('img.board-img');
+    var person = new Image(); person.src = 'assets/img/person.png';
+    var IMG_W = 2200, IMG_H = 1149, PERSON_AT = [1532, 139];
+    // board corners in the photograph (px): top-left, top-right, bottom-right, bottom-left
+    var Q = [[0, -89], [1949, 92], [1963, 755], [0, 728]];
+    function homography(q) {
+      // unit square -> quad (projective), solved directly
+      var x0 = q[0][0], y0 = q[0][1], x1 = q[1][0], y1 = q[1][1], x2 = q[2][0], y2 = q[2][1], x3 = q[3][0], y3 = q[3][1];
+      var dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3, dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
+      var den = dx1 * dy2 - dx2 * dy1, g = (dx3 * dy2 - dx2 * dy3) / den, h = (dx1 * dy3 - dx3 * dy1) / den;
+      var a = x1 - x0 + g * x1, b = x3 - x0 + h * x3, c = x0, d = y1 - y0 + g * y1, e = y3 - y0 + h * y3, f = y0;
+      return function (u, v) { var z = g * u + h * v + 1; return [(a * u + b * v + c) / z, (d * u + e * v + f) / z]; };
+    }
+    var Hq = homography(Q);
+    var AR = 2.75; // the board is about 2.75 times as wide as it is tall
+    var r = rng(17);
+    // B-hat(3,3) in an order around the circle with few crossings
+    var order = ['00', '01', '10', '11', '12', '21', '22', '02', '20'];
+    var VW = order.map(function (w, i) { var a = -Math.PI / 2 + i * 6.2832 / 9; return [0.685 * AR + Math.cos(a) * 0.29, 0.5 + Math.sin(a) * 0.34]; });
+    var EDG = [];
+    order.forEach(function (u, a) { order.forEach(function (v, b) { if (a < b && (u[1] === v[0] || v[1] === u[0])) EDG.push([a, b]); }); });
+    // the cloud: noisy clusters at the vertices plus noise strung along the edges
+    var pts = [], home = [], kind = [];
+    VW.forEach(function (p, vi) { for (var j = 0; j < 24; j++) { pts.push([p[0] + 0.048 * gauss(r), p[1] + 0.048 * gauss(r)]); home.push(vi); kind.push(0); } });
+    EDG.forEach(function (e, ei) { for (var j = 0; j < 6; j++) { var t = 0.15 + 0.7 * r(), a = VW[e[0]], b = VW[e[1]]; pts.push([a[0] + (b[0] - a[0]) * t + 0.022 * gauss(r), a[1] + (b[1] - a[1]) * t + 0.022 * gauss(r)]); home.push(ei); kind.push(1); } });
+    var N = pts.length, delay = pts.map(function () { return r(); });
+    // nearest-neighbour coarsening, twice, on the cluster points
+    function coarsen(P, ids) {
+      var nn = {}, par = {}, i, j;
+      ids.forEach(function (a) { par[a] = a; var b = -1, bd = Infinity; ids.forEach(function (c) { if (c === a) return; var d = (P[a][0] - P[c][0]) * (P[a][0] - P[c][0]) + (P[a][1] - P[c][1]) * (P[a][1] - P[c][1]); if (d < bd) { bd = d; b = c; } }); nn[a] = b; });
+      var find = function (x) { while (par[x] !== x) { par[x] = par[par[x]]; x = par[x]; } return x; };
+      ids.forEach(function (a) { par[find(a)] = find(nn[a]); });
+      var acc = {}; ids.forEach(function (a) { var rt = find(a); acc[rt] = acc[rt] || [0, 0, 0]; acc[rt][0] += P[a][0]; acc[rt][1] += P[a][1]; acc[rt][2]++; });
+      var to = {}; ids.forEach(function (a) { var A = acc[find(a)]; to[a] = [A[0] / A[2], A[1] / A[2]]; });
+      var reps = Object.keys(acc).map(Number);
+      return { nn: nn, to: to, root: find, reps: reps };
+    }
+    var cl = []; for (var i0 = 0; i0 < N; i0++) if (!kind[i0]) cl.push(i0);
+    var L1 = coarsen(pts, cl);
+    var P1 = pts.map(function (p, i) { return kind[i] ? p : L1.to[i]; });
+    var L2 = coarsen(P1, L1.reps);
+    var P2 = pts.map(function (p, i) { return kind[i] ? p : L2.to[L1.root(i)]; });
+    var P3 = pts.map(function (p, i) {
+      if (!kind[i]) return VW[home[i]];
+      var e = EDG[home[i]], a = VW[e[0]], b = VW[e[1]], dx = b[0] - a[0], dy = b[1] - a[1], t = ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy);
+      t = Math.max(0, Math.min(1, t)); return [a[0] + dx * t, a[1] + dy * t];
+    });
+    var jit = EDG.map(function () { return [gauss(r) * 0.6, gauss(r) * 0.6, r()]; });
+
+    // grain for the chalk: a fixed speckle texture used as a mask
+    var grain = document.createElement('canvas'); grain.width = 256; grain.height = 256;
+    (function () { var g = grain.getContext('2d'), id = g.createImageData(256, 256), d = id.data; for (var k = 0; k < d.length; k += 4) { var v = Math.random(); d[k] = d[k + 1] = d[k + 2] = 255; d[k + 3] = v < 0.12 ? 0 : 150 + v * 105; } g.putImageData(id, 0, 0); })();
+    var layer = document.createElement('canvas');
+
+    // timeline (ms)
+    var T = { dots: 0, nn1: 2600, mv1: 4000, nn2: 5400, mv2: 6400, snap: 7600, edges: 9000, labels: 11200, hold: 12200, wipe: 15200, end: 16800 };
+
+    function objectPos() {
+      var cs = getComputedStyle(bgImg).objectPosition.split(' ');
+      return [parseFloat(cs[0]) / 100 || 0.5, parseFloat(cs[1]) / 100 || 0.5];
+    }
+    animate(cv, function (t) {
+      var rect = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 1.6);
+      var w = Math.max(10, Math.round(rect.width)), h = Math.max(10, Math.round(rect.height));
+      if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); layer.width = cv.width; layer.height = cv.height; }
+      var ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+      var lc = layer.getContext('2d'); lc.setTransform(dpr, 0, 0, dpr, 0, 0); lc.clearRect(0, 0, w, h);
+      // the same cover fit as the <img> behind the canvas
+      var op = objectPos(), sc = Math.max(w / IMG_W, h / IMG_H), ox = (w - IMG_W * sc) * op[0], oy = (h - IMG_H * sc) * op[1];
+      var toScreen = function (p) { var q = Hq(p[0] / AR, p[1]); return [ox + q[0] * sc, oy + q[1] * sc]; };
+      var unit = sc * 2.2; // stroke scale
+
+      var tt = still ? T.hold + 10 : t % T.end;
+      var seg = function (a, b) { return Math.max(0, Math.min(1, (tt - a) / (b - a))); };
+      // positions of every point at this moment
+      var m1 = ease(seg(T.mv1, T.mv1 + 1100)), m2 = ease(seg(T.mv2, T.mv2 + 1100)), m3 = ease(seg(T.snap, T.snap + 1300));
+      var pos = pts.map(function (p, i) {
+        var a = p, b = P1[i]; var x = a[0] + (b[0] - a[0]) * m1, y = a[1] + (b[1] - a[1]) * m1;
+        x += (P2[i][0] - P1[i][0]) * m2; y += (P2[i][1] - P1[i][1]) * m2;
+        x += (P3[i][0] - P2[i][0]) * m3; y += (P3[i][1] - P2[i][1]) * m3;
+        return [x, y];
+      });
+      lc.strokeStyle = '#f1f3ec'; lc.fillStyle = '#f1f3ec'; lc.lineCap = 'round'; lc.lineJoin = 'round';
+      // a chalk line: two slightly offset passes, drawn up to fraction f
+      function chalkLine(a, b, f, width, alpha, j) {
+        if (f <= 0) return;
+        var A = toScreen(a), B = toScreen([a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]);
+        var nx = -(B[1] - A[1]), ny = B[0] - A[0], L = Math.hypot(nx, ny) || 1; nx /= L; ny /= L;
+        for (var pass = 0; pass < 2; pass++) {
+          var off = (pass ? 0.9 : -0.4) * unit * 0.6 + (j ? j[pass] * unit * 0.5 : 0);
+          lc.globalAlpha = alpha * (pass ? 0.55 : 0.9); lc.lineWidth = width * unit * (pass ? 0.7 : 1);
+          lc.beginPath(); lc.moveTo(A[0] + nx * off, A[1] + ny * off); lc.lineTo(B[0] + nx * off, B[1] + ny * off); lc.stroke();
+        }
+      }
+      function chalkDot(p, rad, alpha) {
+        var q = toScreen(p); lc.globalAlpha = alpha;
+        lc.beginPath(); lc.arc(q[0], q[1], rad * unit, 0, 6.2832); lc.fill();
+      }
+      // nearest-neighbour edges at each coarsening level
+      var nnA1 = seg(T.nn1, T.nn1 + 900) * (1 - seg(T.mv1 + 300, T.mv1 + 1000));
+      if (nnA1 > 0) cl.forEach(function (i) { var j = L1.nn[i]; chalkLine(pos[i], pos[j], 1, 0.85, 0.8 * nnA1); });
+      var nnA2 = seg(T.nn2, T.nn2 + 700) * (1 - seg(T.mv2 + 300, T.mv2 + 1000));
+      if (nnA2 > 0) L1.reps.forEach(function (i) { var j = L2.nn[i]; chalkLine(pos[i], pos[j], 1, 1.05, 0.9 * nnA2); });
+      // the graph's edges, drawn one after another
+      EDG.forEach(function (e, k) {
+        var st = T.edges + k * 90, f = ease(seg(st, st + 600));
+        if (f > 0) chalkLine(VW[e[0]], VW[e[1]], f, 1.45, 1, jit[k]);
+      });
+      // the points
+      for (var i = 0; i < N; i++) {
+        var appear = seg(T.dots + delay[i] * 2200, T.dots + delay[i] * 2200 + 250);
+        if (appear <= 0) continue;
+        var alpha = appear;
+        if (kind[i]) alpha *= 1 - seg(T.snap + 300, T.edges + 1400);   // noise on the edges is absorbed into the drawn edge
+        if (alpha <= 0) continue;
+        chalkDot(pos[i], kind[i] ? 1.9 : 2.1 + m3 * 0.5, alpha);
+      }
+      // vertices become solid, then their names
+      var vSolid = seg(T.snap + 900, T.edges);
+      if (vSolid > 0) VW.forEach(function (p) { chalkDot(p, 4.4 * vSolid, 1); });
+      var lab = seg(T.labels, T.labels + 900);
+      if (lab > 0) {
+        lc.font = '500 ' + Math.round(unit * 11.5) + 'px "IBM Plex Mono", monospace'; lc.textAlign = 'center'; lc.textBaseline = 'middle';
+        VW.forEach(function (p, i) {
+          var a = -Math.PI / 2 + i * 6.2832 / 9, q = toScreen([p[0] + Math.cos(a) * 0.075, p[1] + Math.sin(a) * 0.075]);
+          lc.globalAlpha = lab; lc.fillText(order[i], q[0], q[1]);
+        });
+      }
+      lc.globalAlpha = 1;
+      // the eraser: a soft band moves across the board and leaves a faint smudge
+      var wipe = seg(T.wipe, T.end - 200);
+      if (wipe > 0) {
+        var x0 = toScreen([0.39 * AR, 0.5])[0], x1 = toScreen([0.97 * AR, 0.5])[0], ex = x0 + (x1 - x0) * wipe;
+        lc.globalCompositeOperation = 'destination-out';
+        var gr = lc.createLinearGradient(ex - 60, 0, ex + 30, 0); gr.addColorStop(0, 'rgba(0,0,0,0.9)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+        lc.fillStyle = gr; lc.fillRect(0, 0, ex + 30, h);
+        lc.globalCompositeOperation = 'source-over';
+      }
+      // grain, then onto the board in front of nothing but the board, then the person in front
+      lc.globalCompositeOperation = 'destination-in'; lc.setTransform(1, 0, 0, 1, 0, 0);
+      lc.fillStyle = lc.createPattern(grain, 'repeat'); lc.fillRect(0, 0, layer.width, layer.height);
+      lc.globalCompositeOperation = 'source-over';
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 0.95; ctx.drawImage(layer, 0, 0); ctx.globalAlpha = 1;
+      if (person.complete && person.naturalWidth) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.drawImage(person, ox + PERSON_AT[0] * sc, oy + PERSON_AT[1] * sc, person.naturalWidth * sc, person.naturalHeight * sc);
+      }
+    });
+  })();
+
   // reconstruction: each vertex of G is deleted in turn and the card G - v joins the deck D(G)
   [].forEach.call(document.querySelectorAll('.deck-anim'), function (box) {
     var cv = box.querySelector('canvas');
